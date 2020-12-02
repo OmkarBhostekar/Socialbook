@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/homeFragment"
+        android:title="Home"
+        app:showAsAction="always"
+        android:icon="@drawable/home_selector"/>
+
+    <item android:id="@+id/searchFragment"
+        android:title="Explore"
+        app:showAsAction="always"
+        android:icon="@drawable/explore_selector"/>
+
+    <item android:id="@+id/empty"
+        android:title=""
+        app:showAsAction="always"
+        android:enabled="false"
+        android:icon="@null"/>
+
+    <item android:id="@+id/userActivityFragment"
+        android:title="Activity"
+        app:showAsAction="always"
+        android:icon="@drawable/user_activity_selector"/>
+
+    <item android:id="@+id/profileFragment"
+        android:title="Profile"
+        app:showAsAction="always"
+        android:icon="@drawable/profile_selector"/>
+</menu>

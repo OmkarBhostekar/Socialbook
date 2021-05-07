@@ -61,7 +61,6 @@ class LoginFragment : Fragment(R.layout.fragment_log_in) {
 //                            (ResourcesCompat.getDrawable(resources, R.drawable.ic_check, null) as VectorDrawable).toBitmap()
 //                        )
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                        Log.d("MyActivity", "onViewCreated: after findnavcontroller")
                     }
                     is AuthViewModel.LoginUiState.Error -> {
                         binding.btnLogIn.revertAnimation()

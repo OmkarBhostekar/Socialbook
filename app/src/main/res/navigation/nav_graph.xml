@@ -12,11 +12,21 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_homeFragment_to_fragmentBottomSheet"
+            app:destination="@id/fragmentBottomSheet" />
+        <action
+            android:id="@+id/action_homeFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.instaclone.ui.profile.fragments.SearchFragment"
-        />
+        >
+        <action
+            android:id="@+id/action_searchFragment_to_fragment2"
+            app:destination="@id/fragment2" />
+    </fragment>
     <fragment
         android:id="@+id/userActivityFragment"
         android:name="com.example.instaclone.ui.profile.fragments.UserActivityFragment"
@@ -46,5 +56,31 @@
         <action
             android:id="@+id/action_registerFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="com.example.instaclone.ui.profile.fragments.Fragment2"
+        android:label="Fragment2" />
+    <dialog
+        android:id="@+id/fragmentBottomSheet"
+        android:name="com.example.instaclone.ui.profile.fragments.FragmentBottomSheet"
+        android:label="FragmentBottomSheet">
+        <action
+            android:id="@+id/action_fragmentBottomSheet_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </dialog>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.instaclone.ui.posts.fragments.PostDetailFragment"
+        android:label="PostDetailFragment" >
+        <argument
+            android:name="image"
+            app:argType="string" />
     </fragment>
 </navigation>

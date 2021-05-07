@@ -2,12 +2,15 @@ package com.example.instaclone.ui.posts.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
@@ -39,6 +42,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         binding.rvPosts.apply {
             adapter = postsAdapter
             layoutManager = LinearLayoutManager(activity)
+            postponeEnterTransition()
+            viewTreeObserver.addOnDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
         }
 
         viewModel.posts.observe(viewLifecycleOwner,{
@@ -50,7 +58,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         super.onStart()
         lifecycleScope.launch {
             readBooleanFromDS(IS_LOGGED_IN)?.let {
-                if (it){
+                if (!it){
                     findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
                 }
             }
@@ -69,6 +77,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
 
     override fun viewLikes(postId: String) {
         // show dialog that will show users who liked that post
-        viewModel.getLikedBy(postId)
+        findNavController().navigate(R.id.action_homeFragment_to_fragmentBottomSheet,Bundle().apply {
+            putString("type","like")
+            putString("id",postId)
+        })
+    }
+
+    override fun onClick(postId: String,image: String, ivPostImage: ImageView,tvUserName: TextView) {
+        val extras = FragmentNavigatorExtras(
+            ivPostImage to "post_image",
+            tvUserName to "textview"
+        )
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(image),extras)
     }
 }

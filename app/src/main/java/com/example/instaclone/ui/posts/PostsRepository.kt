@@ -6,7 +6,7 @@ class PostsRepository @Inject constructor(
     private val api: PostsApi
 ) {
 
-    suspend fun getAllPosts(uid: String) = api.getAllPosts(uid)
+    suspend fun getAllPosts(token: String,uid: String) = api.getAllPosts(token,uid)
 
     suspend fun createPost(body: HashMap<String,Any>) = api.createNewPost(body)
 

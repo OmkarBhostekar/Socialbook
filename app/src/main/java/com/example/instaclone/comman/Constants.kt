@@ -3,9 +3,10 @@ package com.example.instaclone.comman
 object Constants {
 
     // development url
-    const val BASE_URL = "http://192.168.2.203:3000"
+//    const val BASE_URL = "http://192.168.2.206:8000"
     // heroku prod url
-//    const val BASE_URL = "https://instagram-clone-project-new.herokuapp.com"
+    const val BASE_URL = "https://instagram-clone-om.herokuapp.com"
+    const val TOKEN = "token"
     const val UID = "uid"
     const val BIO = "bio"
     const val NAME = "name"

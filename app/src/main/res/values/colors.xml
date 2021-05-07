@@ -20,5 +20,7 @@
     <color name="successGreen">#4BB543</color>
     <color name="forcedWhite">#fff</color>
 
+    <color name="searchBoxColor">#d8dcd6</color>
+
     <color name="primaryTextColor">@color/black</color>
 </resources>

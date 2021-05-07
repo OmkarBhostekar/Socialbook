@@ -5,7 +5,8 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.*
-import android.widget.Toast
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -18,7 +19,7 @@ import com.example.instaclone.databinding.ItemPostBinding
 import com.example.instaclone.ui.posts.models.Post
 
 class PostsAdapter(
-    val listener: PostsAdapter.OnClickListener
+    val listener: OnClickListener
 ) : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Post>() {
@@ -81,7 +82,7 @@ class PostsAdapter(
                         LikeAnimation.visibility = View.VISIBLE
                     }
                 })
-                ivPostImage.setOnTouchListener(
+                LikeAnimation.setOnTouchListener(
                     object : View.OnTouchListener {
                         val gestureDetector = GestureDetector(object :
                             GestureDetector.SimpleOnGestureListener() {
@@ -106,9 +107,9 @@ class PostsAdapter(
                         }
                     })
 
-                tvLikeCount.text = post.likes.size.toLikeCount()
+                tvLikeCount.text = post.likes.size.toString()
                 tvLikeCount.setOnClickListener { listener.viewLikes(post._id) }
-                tvCommentCount.text = post.comments.size.toCommentCount()
+                tvCommentCount.text = post.comments.size.toString()
                 tvPostDescription.text = post.description
                 if (isLastPost) {
                     binding.root.setPadding(0, 0, 0, 150)
@@ -123,6 +124,9 @@ class PostsAdapter(
                         )
                     )
                 }
+                root.setOnClickListener {
+                    listener.onClick(post._id,post.image,ivPostImage,tvUserName)
+                }
             }
         }
     }
@@ -130,5 +134,6 @@ class PostsAdapter(
     interface OnClickListener{
         fun onLike(postId: String)
         fun viewLikes(postId: String)
+        fun onClick(postId: String,image: String,ivPostImage: ImageView,tvUserName: TextView)
     }
 }

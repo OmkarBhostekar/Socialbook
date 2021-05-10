@@ -33,18 +33,18 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         _bindng = FragmentRegisterBinding.bind(view)
 
         binding.apply {
-            btnSignUp.setOnClickListener {
+            btnSignup.setOnClickListener {
                 if (etName.text!!.isNotEmpty() && etUserName.text!!.isNotEmpty() &&
-                        etRegisterEmail.text!!.isNotEmpty() && etRegisterPassword.text!!.isNotEmpty()){
+                    etSignupEmail.text!!.isNotEmpty() && etSignupPassword.text!!.isNotEmpty()){
                     viewModel.register(
                         etName.text.toString(),
                         etUserName.text.toString() ,
-                        etRegisterEmail.text.toString() ,
-                        etRegisterPassword.text.toString()
+                        etSignupEmail.text.toString() ,
+                        etSignupPassword.text.toString()
                     )
                 }
             }
-            tvLogIn.setOnClickListener {
+            btnLogin.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
@@ -53,19 +53,19 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             viewModel.loginUiState.collect{
                 when(it){
                     is AuthViewModel.LoginUiState.Success -> {
-                        binding.btnSignUp.doneLoadingAnimation(
-                            ContextCompat.getColor(requireContext(),R.color.successGreen),
-                            (ResourcesCompat.getDrawable(resources, R.drawable.ic_check, null) as VectorDrawable).toBitmap()
-                        )
+//                        binding.btnSignUp.doneLoadingAnimation(
+//                            ContextCompat.getColor(requireContext(),R.color.successGreen),
+//                            (ResourcesCompat.getDrawable(resources, R.drawable.ic_check, null) as VectorDrawable).toBitmap()
+//                        )
                         delay(1000L)
                         findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
                     }
                     is AuthViewModel.LoginUiState.Error -> {
-                        binding.btnSignUp.revertAnimation()
+//                        binding.btnSignUp.revertAnimation()
                         Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                     }
                     is AuthViewModel.LoginUiState.Loading -> {
-                        binding.btnSignUp.startAnimation()
+//                        binding.btnSignUp.startAnimation()
                         // show loading bar
                     }
                     else -> {}

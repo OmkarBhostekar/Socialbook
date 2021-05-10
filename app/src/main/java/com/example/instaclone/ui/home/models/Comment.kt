@@ -1,4 +1,4 @@
-package com.example.instaclone.ui.posts.models
+package com.example.instaclone.ui.home.models
 
 import com.example.instaclone.ui.auth.models.User
 

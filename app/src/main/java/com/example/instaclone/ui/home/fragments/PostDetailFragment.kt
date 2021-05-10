@@ -1,4 +1,4 @@
-package com.example.instaclone.ui.posts.fragments
+package com.example.instaclone.ui.home.fragments
 
 import android.os.Bundle
 import android.transition.TransitionInflater

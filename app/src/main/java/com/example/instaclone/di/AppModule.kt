@@ -2,12 +2,11 @@ package com.example.instaclone.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.createDataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.createDataStore
 import com.example.instaclone.comman.Constants.BASE_URL
 import com.example.instaclone.ui.auth.AuthApi
-import com.example.instaclone.ui.posts.PostsApi
+import com.example.instaclone.ui.home.PostsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

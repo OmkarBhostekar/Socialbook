@@ -1,10 +1,10 @@
-package com.example.instaclone.ui.posts
+package com.example.instaclone.ui.home
 
 import com.example.instaclone.comman.ApiResponse
 import com.example.instaclone.comman.MessageResponse
 import com.example.instaclone.ui.auth.models.User
-import com.example.instaclone.ui.posts.models.Comment
-import com.example.instaclone.ui.posts.models.Post
+import com.example.instaclone.ui.home.models.Comment
+import com.example.instaclone.ui.home.models.Post
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -17,8 +17,7 @@ interface PostsApi {
 
     @GET("/posts")
     suspend fun getAllPosts(
-        @Header("Authorization") token: String,
-        @Query("uid") uid: String
+        @Header("Authorization") token: String
     ): Response<ApiResponse<List<Post>>>
 
     @POST("/posts/like")

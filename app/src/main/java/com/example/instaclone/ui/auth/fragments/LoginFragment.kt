@@ -20,11 +20,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.instaclone.R
+import com.example.instaclone.comman.Constants.IS_LOGGED_IN
+import com.example.instaclone.data.DataStore.readBooleanFromDS
 import com.example.instaclone.databinding.FragmentLogInBinding
 import com.example.instaclone.ui.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_log_in) {
@@ -33,21 +36,27 @@ class LoginFragment : Fragment(R.layout.fragment_log_in) {
     private val binding: FragmentLogInBinding
     get() = _bindng!!
     private val viewModel: AuthViewModel by viewModels()
-    lateinit var store: DataStore<Preferences>
+    @Inject
+    lateinit var datastore: DataStore<Preferences>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _bindng = FragmentLogInBinding.bind(view)
-        store = requireContext().createDataStore("Settings")
+
+
+        lifecycleScope.launchWhenStarted {
+            if (readBooleanFromDS(IS_LOGGED_IN,datastore))
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        }
 
         binding.apply {
-            btnLogIn.setOnClickListener {
+            btnLogin.setOnClickListener {
                 if (etLoginEmail.text!!.isNotEmpty() && etLoginPassword.text!!.isNotEmpty()){
                     viewModel.login(etLoginEmail.text.toString(),etLoginPassword.text.toString())
                 }
             }
 
-            tvSignUp.setOnClickListener {
+            btnSignUp.setOnClickListener {
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
         }
@@ -63,17 +72,23 @@ class LoginFragment : Fragment(R.layout.fragment_log_in) {
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }
                     is AuthViewModel.LoginUiState.Error -> {
-                        binding.btnLogIn.revertAnimation()
                         Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                     }
                     is AuthViewModel.LoginUiState.Loading -> {
-                        binding.btnLogIn.startAnimation()
                         // show loading bar
                     }
                     else -> {}
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+//        lifecycleScope.launchWhenStarted {
+//            if (readBooleanFromDS(IS_LOGGED_IN,datastore))
+//                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+//        }
     }
 
     override fun onDestroy() {

@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="statusBarColor">#ffa500</color>
+    <color name="statusBarColor">#F93D7F</color>
     <color name="surfaceColor">#fff</color>
     <color name="surfaceDark">#f3f3f7</color>
     <color name="colorPrimary">#ffa500</color>
@@ -15,12 +15,17 @@
     <color name="colorAccent">#F79B4A</color>
     <color name="gradientPink">#E54665</color>
     <color name="gradientOrange">#F79B4A</color>
-    <color name="colorLightBlue">#2196F3</color>
+    <color name="colorLightBlue">#09c6f9</color>
+    <color name="colorDarkBlue">#045de9</color>
     <color name="colorGray">#887799</color>
     <color name="successGreen">#4BB543</color>
     <color name="forcedWhite">#fff</color>
 
     <color name="searchBoxColor">#d8dcd6</color>
+    <color name="grey_color">#C0C0C0</color>
+    <color name="colorPink">#FA568F</color>
+    <color name="bg_light_gray">#EBEFF5</color>
 
     <color name="primaryTextColor">@color/black</color>
+    <color name="colorLightOrange">#FCA98E</color>
 </resources>

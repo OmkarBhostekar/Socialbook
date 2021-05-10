@@ -79,6 +79,7 @@ dependencies {
     // Firebase libraries
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging'
 
     //Circuler ImageView
     implementation 'de.hdodenhof:circleimageview:2.1.0'

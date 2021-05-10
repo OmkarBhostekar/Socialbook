@@ -17,5 +17,5 @@ interface AuthApi {
     @POST("/auth/register")
     suspend fun register(
             @Body body: HashMap<String,Any>
-    ) : Response<User>
+    ) :  Response<ApiResponse<LoginResponse>>
 }

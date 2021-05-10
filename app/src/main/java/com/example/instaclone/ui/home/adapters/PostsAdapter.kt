@@ -1,4 +1,4 @@
-package com.example.instaclone.ui.posts.adapters
+package com.example.instaclone.ui.home.adapters
 
 import android.animation.Animator
 import android.annotation.SuppressLint
@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.instaclone.R
-import com.example.instaclone.comman.toCommentCount
 import com.example.instaclone.comman.toLikeCount
 import com.example.instaclone.databinding.ItemPostBinding
-import com.example.instaclone.ui.posts.models.Post
+import com.example.instaclone.ui.home.models.Post
 
 class PostsAdapter(
     val listener: OnClickListener

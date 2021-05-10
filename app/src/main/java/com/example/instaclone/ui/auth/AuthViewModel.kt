@@ -51,8 +51,10 @@ class AuthViewModel @ViewModelInject constructor(
         val response = repository.loginUser(body)
         if (response.isSuccessful){
             // save user to datastore
-            response.body()!!.Result!!.token?.let { saveStringToDS(TOKEN, it,dataStore) }
-            saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
+            response.body()!!.Result!!.token?.let {
+                saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
+                saveStringToDS(TOKEN, it,dataStore)
+            }
             delay(1000L)
             _loginUiState.value = LoginUiState.Success
         }else{
@@ -75,8 +77,10 @@ class AuthViewModel @ViewModelInject constructor(
         body["pass"] = password
         val response = repository.registerUser(body)
         if (response.isSuccessful){
-            // save user to datastore
-            saveUser(user = response.body()!!)
+            response.body()!!.Result!!.token?.let {
+                saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
+                saveStringToDS(TOKEN, it,dataStore)
+            }
             // notify ui to registered
             _loginUiState.value = LoginUiState.Success
         }else{

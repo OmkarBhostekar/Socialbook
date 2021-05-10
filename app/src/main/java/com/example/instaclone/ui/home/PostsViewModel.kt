@@ -1,12 +1,10 @@
-package com.example.instaclone.ui.posts
+package com.example.instaclone.ui.home
 
 import android.util.Log
 import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.preferencesKey
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,9 +14,8 @@ import com.example.instaclone.comman.Constants.UID
 import com.example.instaclone.comman.Result
 import com.example.instaclone.data.DataStore.readStringFromDS
 import com.example.instaclone.ui.auth.models.User
-import com.example.instaclone.ui.posts.models.Post
+import com.example.instaclone.ui.home.models.Post
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -31,7 +28,7 @@ class PostsViewModel @ViewModelInject constructor(
     val likedBy = MutableLiveData<Result<List<User>>>()
 
     fun getAllPosts() = viewModelScope.launch {
-        val response = repository.getAllPosts("Bearer ${readStringFromDS(TOKEN,dataStore)}",readStringFromDS(UID,dataStore) ?: "")
+        val response = repository.getAllPosts("Bearer ${readStringFromDS(TOKEN,dataStore)}")
         if (response.isSuccessful)
             posts.postValue(response.body()?.Result)
         else

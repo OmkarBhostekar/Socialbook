@@ -1,4 +1,4 @@
-package com.example.instaclone.ui.posts.adapters
+package com.example.instaclone.ui.home.adapters
 
 import android.view.LayoutInflater
 import android.view.View

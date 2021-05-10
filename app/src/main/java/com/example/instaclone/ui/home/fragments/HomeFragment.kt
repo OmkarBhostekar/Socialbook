@@ -1,4 +1,4 @@
-package com.example.instaclone.ui.posts.fragments
+package com.example.instaclone.ui.home.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -6,21 +6,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.preferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
-import com.example.instaclone.comman.Constants.IS_LOGGED_IN
 import com.example.instaclone.databinding.FragmentHomeBinding
-import com.example.instaclone.ui.posts.PostsViewModel
-import com.example.instaclone.ui.posts.adapters.PostsAdapter
+import com.example.instaclone.ui.home.PostsViewModel
+import com.example.instaclone.ui.home.adapters.PostsAdapter
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,6 +34,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         super.onViewCreated(view, savedInstanceState)
         _bindng = FragmentHomeBinding.bind(view)
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful)
+                Timber.d(it.result)
+        }
+
         viewModel.getAllPosts()
         val postsAdapter = PostsAdapter(this)
         binding.rvPosts.apply {
@@ -52,23 +54,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         viewModel.posts.observe(viewLifecycleOwner,{
             postsAdapter.posts = it
         })
-    }
-
-    override fun onStart() {
-        super.onStart()
-        lifecycleScope.launch {
-            readBooleanFromDS(IS_LOGGED_IN)?.let {
-                if (!it){
-                    findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-                }
-            }
-        }
-    }
-
-    private suspend fun readBooleanFromDS(key: String) : Boolean? {
-        val dataStoreKey = preferencesKey<Boolean>(key)
-        val preferences = dataStore.data.first()
-        return preferences[dataStoreKey]
     }
 
     override fun onLike(postId: String) {

@@ -20,10 +20,10 @@
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppbar"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="45dp"
         android:layout_gravity="bottom"
         app:fabCradleRoundedCornerRadius="20dp"
-        app:fabCradleMargin="10dp"
+        app:fabCradleMargin="9dp"
         style="@style/Widget.MaterialComponents.BottomAppBar"
         app:backgroundTint="@color/surfaceColor"
         app:contentInsetStart="0dp"
@@ -35,10 +35,10 @@
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNav"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
+                android:layout_height="45dp"
                 app:itemIconSize="22dp"
                 android:background="@drawable/background_transparent"
-                app:itemIconTint="@android:color/black"
+                app:itemIconTint="@color/bottom_nav_color"
                 app:labelVisibilityMode="unlabeled"
                 app:menu="@menu/bottom_menu" />
         </FrameLayout>

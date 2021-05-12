@@ -15,8 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var navController: NavController
-    lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +36,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController,appBarConfiguration)
 
-        navController.addOnDestinationChangedListener { c, d, a ->
+        navController.addOnDestinationChangedListener { _, d, _ ->
             when(d.id){
                 R.id.loginFragment,
                 R.id.registerFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
+                R.id.postDetailFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
                 R.id.profileFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = true)
                 else -> showToolbarAndBottomNav(toolbar = true,bottomNav = true)
             }

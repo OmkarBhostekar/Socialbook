@@ -14,8 +14,6 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
     private var _binding: FragmentPostDetailBinding? = null
     private val binding: FragmentPostDetailBinding
         get() = _binding!!
-    private val args: PostDetailFragmentArgs by navArgs()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPostDetailBinding.bind(view)
@@ -26,7 +24,6 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
         sharedElementEnterTransition = transition
         sharedElementReturnTransition = transition
 
-        Glide.with(activity).load(args.image).into(binding.ivPostImage)
     }
 
      override fun onDestroy() {

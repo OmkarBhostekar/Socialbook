@@ -4,16 +4,16 @@
         <shape android:shape="oval">
             <gradient
                 android:angle="45"
-                android:startColor="@color/gradientOrange"
-                android:endColor="@color/gradientPink" />
+                android:startColor="@color/colorLightBlue"
+                android:endColor="@color/colorDarkBlue" />
             <size
                 android:width="56dp"
                 android:height="56dp" />
         </shape>
     </item>
     <item
-        android:left="13dp"
-        android:right="13dp">
+        android:left="15dp"
+        android:right="15dp">
         <shape android:shape="line">
             <stroke
                 android:width="2dp"
@@ -21,8 +21,8 @@
         </shape>
     </item>
     <item
-        android:left="13dp"
-        android:right="13dp">
+        android:left="15dp"
+        android:right="15dp">
         <rotate
             android:fromDegrees="90">
             <shape android:shape="line">

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
 import com.example.instaclone.comman.Result
 import com.example.instaclone.databinding.FollowersBottomSheetBinding
-import com.example.instaclone.ui.home.PostsViewModel
+import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.profile.adapters.FollowersAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +31,7 @@ class FragmentBottomSheet : BottomSheetDialogFragment(){
     private val binding: FollowersBottomSheetBinding
         get() = _binding!!
     private val args: FragmentBottomSheetArgs by navArgs()
-    private val postsViewModel: PostsViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,8 +44,8 @@ class FragmentBottomSheet : BottomSheetDialogFragment(){
 
         if (type == "like"){
             binding.tvTitle.text = "Post is Liked by"
-            postsViewModel.getLikedBy(id)
-            postsViewModel.likedBy.observe(viewLifecycleOwner,{
+            homeViewModel.getLikedBy(id)
+            homeViewModel.likedBy.observe(viewLifecycleOwner,{
                 if (it is Result.Success){
                     binding.progressBar.isVisible = false
                     binding.rvFollowers.adapter = FollowersAdapter(it.data!!)

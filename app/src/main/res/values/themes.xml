@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Instagramclone" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPink</item>
+        <item name="colorPrimary">@color/colorLightBlue</item>
         <item name="colorPrimaryVariant">@color/colorAccent</item>
         <item name="colorOnPrimary">@color/colorPrimaryDark</item>
         <!-- Secondary brand color. -->

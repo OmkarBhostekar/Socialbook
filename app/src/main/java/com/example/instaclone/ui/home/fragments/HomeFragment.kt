@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
 import com.example.instaclone.databinding.FragmentHomeBinding
-import com.example.instaclone.ui.home.PostsViewModel
+import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.home.adapters.PostsAdapter
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
     private var _bindng: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() =  _bindng!!
-    private val viewModel: PostsViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     @Inject
     lateinit var dataStore: DataStore<Preferences>
 

@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.createDataStore
 import com.example.instaclone.comman.Constants.BASE_URL
 import com.example.instaclone.ui.auth.AuthApi
-import com.example.instaclone.ui.home.PostsApi
+import com.example.instaclone.ui.home.HomeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,5 +47,5 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providePostsApi(retrofit: Retrofit): PostsApi = retrofit.create(PostsApi::class.java)
+    fun providePostsApi(retrofit: Retrofit): HomeApi = retrofit.create(HomeApi::class.java)
 }

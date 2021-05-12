@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 
 class AuthViewModel @ViewModelInject constructor(
         @Assisted savedStateHandle: SavedStateHandle,
@@ -45,20 +46,24 @@ class AuthViewModel @ViewModelInject constructor(
             password: String
     ) = viewModelScope.launch {
         _loginUiState.value = LoginUiState.Loading
-        val body = HashMap<String,Any>()
-        body["email"] = email
-        body["pass"] = password
-        val response = repository.loginUser(body)
-        if (response.isSuccessful){
-            // save user to datastore
-            response.body()!!.Result!!.token?.let {
-                saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
-                saveStringToDS(TOKEN, it,dataStore)
+        try{
+            val body = HashMap<String,Any>()
+            body["email"] = email
+            body["pass"] = password
+            val response = repository.loginUser(body)
+            if (response.isSuccessful){
+                // save user to datastore
+                response.body()!!.Result!!.token?.let {
+                    saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
+                    saveStringToDS(TOKEN, it,dataStore)
+                }
+                delay(1000L)
+                _loginUiState.value = LoginUiState.Success
+            }else{
+                _loginUiState.value = LoginUiState.Error("Error")
             }
-            delay(1000L)
-            _loginUiState.value = LoginUiState.Success
-        }else{
-            _loginUiState.value = LoginUiState.Error("Error")
+        }catch(e: Exception){
+        }catch(e: SocketTimeoutException){
         }
     }
 
@@ -70,21 +75,25 @@ class AuthViewModel @ViewModelInject constructor(
             password: String,
     ) = viewModelScope.launch {
         _loginUiState.value = LoginUiState.Loading
-        val body = HashMap<String,Any>()
-        body["name"] = name
-        body["username"] = username
-        body["email"] = email
-        body["pass"] = password
-        val response = repository.registerUser(body)
-        if (response.isSuccessful){
-            response.body()!!.Result!!.token?.let {
-                saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
-                saveStringToDS(TOKEN, it,dataStore)
+        try{
+            val body = HashMap<String,Any>()
+            body["name"] = name
+            body["username"] = username
+            body["email"] = email
+            body["pass"] = password
+            val response = repository.registerUser(body)
+            if (response.isSuccessful){
+                response.body()!!.Result!!.token?.let {
+                    saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
+                    saveStringToDS(TOKEN, it,dataStore)
+                }
+                // notify ui to registered
+                _loginUiState.value = LoginUiState.Success
+            }else{
+                _loginUiState.value = LoginUiState.Error("Error")
             }
-            // notify ui to registered
-            _loginUiState.value = LoginUiState.Success
-        }else{
-            _loginUiState.value = LoginUiState.Error("Error")
+        }catch(e: Exception){
+        }catch(e: SocketTimeoutException){
         }
     }
 

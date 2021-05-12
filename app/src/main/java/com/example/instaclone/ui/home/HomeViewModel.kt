@@ -19,8 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PostsViewModel @ViewModelInject constructor(
-    val repository: PostsRepository,
+class HomeViewModel @ViewModelInject constructor(
+    val repository: HomeRepository,
     private val dataStore: DataStore<Preferences>
 ) : ViewModel(){
 
@@ -31,8 +31,6 @@ class PostsViewModel @ViewModelInject constructor(
         val response = repository.getAllPosts("Bearer ${readStringFromDS(TOKEN,dataStore)}")
         if (response.isSuccessful)
             posts.postValue(response.body()?.Result)
-        else
-            Log.d("MyActivity", "getAllPosts: error")
     }
 
     fun createNewPost(image: String, desc: String) = viewModelScope.launch {
@@ -40,7 +38,7 @@ class PostsViewModel @ViewModelInject constructor(
         body["uid"] = readStringFromDS(UID,dataStore)?: ""
         body["image"] = image
         body["desc"] = desc
-        val response = repository.createPost(body)
+        val response = repository.createPost("Bearer ${readStringFromDS(TOKEN,dataStore)}",body)
         if (response.isSuccessful)
             showToast("Post created successfully")
         else
@@ -49,16 +47,14 @@ class PostsViewModel @ViewModelInject constructor(
 
     fun likePost(postId: String) = viewModelScope.launch {
         val body = HashMap<String,Any>()
-        body["uid"] = readStringFromDS(UID,dataStore) ?: ""
-        body["postId"] = postId
-        repository.likePost(body)
+        repository.likePost(postId,"Bearer ${readStringFromDS(TOKEN,dataStore)}")
     }
 
     fun getLikedBy(postId: String) = viewModelScope.launch {
         likedBy.postValue(Result.Loading())
-        val response = repository.getLikedBy(postId,readStringFromDS(UID,dataStore) ?: "")
+        val response = repository.getLikedBy(postId,"Bearer ${readStringFromDS(TOKEN,dataStore)}")
         if (response.isSuccessful)
-            likedBy.postValue(Result.Success(response.body()!!))
+            likedBy.postValue(Result.Success(response.body()!!.Result!!))
         else
             likedBy.postValue(Result.Error(""))
     }

@@ -59,4 +59,8 @@ class MainActivity : AppCompatActivity() {
     fun setToolbarTitle(title:String) {
         binding.toolbar.tvTitle.text = title
     }
+
+    override fun onNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
 }

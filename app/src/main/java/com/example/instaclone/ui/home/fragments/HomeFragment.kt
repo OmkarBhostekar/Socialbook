@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
 import com.example.instaclone.databinding.FragmentHomeBinding
+import com.example.instaclone.ui.MainActivity
 import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.home.adapters.PostsAdapter
 import com.example.instaclone.ui.home.models.Post
@@ -28,8 +29,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
     private val binding: FragmentHomeBinding
         get() =  _bindng!!
     private val viewModel: HomeViewModel by viewModels()
-    @Inject
-    lateinit var dataStore: DataStore<Preferences>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +38,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
             if (it.isSuccessful)
                 Timber.d(it.result)
         }
+
+        (activity as MainActivity).setToolbarTitle("SocialBook")
 
         viewModel.getAllPosts()
         val postsAdapter = PostsAdapter(this)

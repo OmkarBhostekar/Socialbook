@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.transition.TransitionInflater
 import android.view.View
+import android.widget.Toast
 import androidx.core.text.bold
 import androidx.core.text.color
 import androidx.fragment.app.Fragment
@@ -27,6 +28,7 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
         get() = _binding!!
     private val args: PostDetailFragmentArgs by navArgs()
     private val viewModel: HomeViewModel by viewModels()
+    lateinit var adapter: CommentsAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPostDetailBinding.bind(view)
@@ -42,7 +44,9 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
         args.postId?.let { viewModel.getComments(it) }
 
         binding.apply {
-            args.userImage?.let { ivProfileImage.setImage(it) }
+            adapter = CommentsAdapter()
+            rvComments.adapter = adapter
+            args.userImage?.let { ivPostUserProfile.setImage(it) }
             tvPostDescription.text = SpannableStringBuilder()
                 .color(Color.BLACK){
                     bold { append("${args.username}  ") }
@@ -56,7 +60,8 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
         }
 
         viewModel.comments.observe(viewLifecycleOwner,{
-            binding.rvComments.adapter = CommentsAdapter(it)
+            Toast.makeText(requireContext(), "new comments", Toast.LENGTH_SHORT).show()
+            adapter.comments = it
         })
 
     }

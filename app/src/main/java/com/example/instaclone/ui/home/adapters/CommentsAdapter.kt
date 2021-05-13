@@ -11,9 +11,14 @@ import com.bumptech.glide.Glide
 import com.example.instaclone.databinding.ItemCommentBinding
 import com.example.instaclone.ui.home.models.Comment
 
-class CommentsAdapter(
-    val comments: List<Comment>
-) : RecyclerView.Adapter<CommentsAdapter.ViewHolder>() {
+class CommentsAdapter() : RecyclerView.Adapter<CommentsAdapter.ViewHolder>() {
+
+    var comments: List<Comment> = listOf()
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemCommentBinding.inflate(LayoutInflater.from(parent.context),parent,false))

@@ -34,7 +34,13 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.instaclone.ui.profile.fragments.ProfileFragment"
-        />
+        >
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.instaclone.ui.auth.fragments.LoginFragment"

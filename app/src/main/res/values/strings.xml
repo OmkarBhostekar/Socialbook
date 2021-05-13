@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SocialBook</string>
     <string name="default_notification_channel_id">123</string>
+    <string name="description"><b>be_like_om</b> Hey This is my first post</string>
 </resources>

@@ -14,10 +14,12 @@ import com.example.instaclone.comman.Constants.UID
 import com.example.instaclone.comman.Result
 import com.example.instaclone.data.DataStore.readStringFromDS
 import com.example.instaclone.ui.auth.models.User
+import com.example.instaclone.ui.home.models.Comment
 import com.example.instaclone.ui.home.models.Post
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.SocketTimeoutException
 
 class HomeViewModel @ViewModelInject constructor(
     val repository: HomeRepository,
@@ -25,6 +27,7 @@ class HomeViewModel @ViewModelInject constructor(
 ) : ViewModel(){
 
     val posts = MutableLiveData<List<Post>>()
+    val comments = MutableLiveData<List<Comment>>()
     val likedBy = MutableLiveData<Result<List<User>>>()
 
     fun getAllPosts() = viewModelScope.launch {
@@ -57,6 +60,32 @@ class HomeViewModel @ViewModelInject constructor(
             likedBy.postValue(Result.Success(response.body()!!.Result!!))
         else
             likedBy.postValue(Result.Error(""))
+    }
+
+    fun newComment(text: String,postId: String) = viewModelScope.launch {
+        try{
+            val body = HashMap<String, Any>()
+            body["text"] = text
+            val response = repository.commentOnPost(
+                postId,
+                "Bearer ${readStringFromDS(TOKEN,dataStore)}",
+                body
+            )
+            if (response.isSuccessful)
+                getComments(postId)
+        }catch(e: Exception){
+        }catch(e: SocketTimeoutException){
+        }
+    }
+
+    fun getComments(postId: String) = viewModelScope.launch {
+        try{
+            val response = repository.getAllCommentsOfPost(postId,"Bearer ${readStringFromDS(TOKEN,dataStore)}")
+            if (response.isSuccessful && response.body()!!.Result != null && response.body()!!.Result!!.isNotEmpty())
+                comments.postValue(response.body()!!.Result!!)
+        }catch(e: Exception){
+        }catch(e: SocketTimeoutException){
+        }
     }
 
     private suspend fun showToast(msg: String) = withContext(Dispatchers.Main){

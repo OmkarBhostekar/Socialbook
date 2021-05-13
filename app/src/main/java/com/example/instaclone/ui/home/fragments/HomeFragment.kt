@@ -15,6 +15,7 @@ import com.example.instaclone.R
 import com.example.instaclone.databinding.FragmentHomeBinding
 import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.home.adapters.PostsAdapter
+import com.example.instaclone.ui.home.models.Post
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -68,11 +69,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         })
     }
 
-    override fun onClick(postId: String,image: String, ivPostImage: ImageView,tvUserName: TextView) {
-        val extras = FragmentNavigatorExtras(
-            ivPostImage to "post_image",
-            tvUserName to "textview"
-        )
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(image),extras)
+    override fun onClick(post: Post) {
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(
+            post.user.username,post.user.userImage,post._id,post.description,post.user._id
+        ))
     }
 }

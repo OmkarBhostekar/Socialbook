@@ -81,7 +81,7 @@ class PostsAdapter(
                         LikeAnimation.visibility = View.VISIBLE
                     }
                 })
-                LikeAnimation.setOnTouchListener(
+                ivPostImage.setOnTouchListener(
                     object : View.OnTouchListener {
                         val gestureDetector = GestureDetector(object :
                             GestureDetector.SimpleOnGestureListener() {
@@ -124,7 +124,7 @@ class PostsAdapter(
                     )
                 }
                 root.setOnClickListener {
-                    listener.onClick(post._id,post.image,ivPostImage,tvUserName)
+                    listener.onClick(post)
                 }
             }
         }
@@ -133,6 +133,6 @@ class PostsAdapter(
     interface OnClickListener{
         fun onLike(postId: String)
         fun viewLikes(postId: String)
-        fun onClick(postId: String,image: String,ivPostImage: ImageView,tvUserName: TextView)
+        fun onClick(post: Post)
     }
 }

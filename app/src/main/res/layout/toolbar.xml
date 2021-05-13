@@ -11,37 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="120dp"
-            android:layout_height="42dp"
-            android:src="@drawable/insta_name"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="gone"/>
-
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Home"
-            android:visibility="gone"
+            android:fontFamily="@font/billabong"
+            android:text="SocialBook"
+            android:visibility="visible"
             android:textSize="18sp"
             android:textColor="@color/primaryTextColor"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="#d8dcd6"-->
-<!--            android:padding="8dp"-->
-<!--            android:hint="Search..."-->
-<!--            android:layout_marginHorizontal="20dp"/>-->
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"

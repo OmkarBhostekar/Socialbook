@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             when(d.id){
                 R.id.loginFragment,
                 R.id.registerFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
-                R.id.postDetailFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
+                R.id.postDetailFragment -> showToolbarAndBottomNav(toolbar = true,bottomNav = false)
                 R.id.profileFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = true)
                 else -> showToolbarAndBottomNav(toolbar = true,bottomNav = true)
             }
@@ -54,5 +54,9 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.isVisible = bottomNav
         binding.bottomAppbar.isVisible = bottomNav
         binding.fabAdd.isVisible = bottomNav
+    }
+
+    fun setToolbarTitle(title:String) {
+        binding.toolbar.tvTitle.text = title
     }
 }

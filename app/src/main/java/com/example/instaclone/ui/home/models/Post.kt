@@ -1,6 +1,7 @@
 package com.example.instaclone.ui.home.models
 
 import com.example.instaclone.ui.auth.models.User
+import com.google.firebase.firestore.DocumentSnapshot
 
 data class Post(
     val _id: String,

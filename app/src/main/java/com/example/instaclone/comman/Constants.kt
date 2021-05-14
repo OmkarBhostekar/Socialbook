@@ -2,6 +2,9 @@ package com.example.instaclone.comman
 
 object Constants {
 
+    const val PICK_IMAGE_REQUEST_CODE = 200
+    const val GALLERY_PERMISSION_REQUEST_CODE = 150
+
     // development url
 //    const val BASE_URL = "http://192.168.2.206:8000"
     // heroku prod url

@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
-import com.example.instaclone.comman.Result
+import com.example.instaclone.comman.Resource
 import com.example.instaclone.databinding.FollowersBottomSheetBinding
 import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.profile.adapters.FollowersAdapter
@@ -46,7 +46,7 @@ class FragmentBottomSheet : BottomSheetDialogFragment(){
             binding.tvTitle.text = "Post is Liked by"
             homeViewModel.getLikedBy(id)
             homeViewModel.likedBy.observe(viewLifecycleOwner,{
-                if (it is Result.Success){
+                if (it is Resource.Success){
                     binding.progressBar.isVisible = false
                     binding.rvFollowers.adapter = FollowersAdapter(it.data!!)
                     binding.rvFollowers.layoutManager = LinearLayoutManager(activity)

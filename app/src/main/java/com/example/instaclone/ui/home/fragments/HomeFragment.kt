@@ -2,13 +2,9 @@ package com.example.instaclone.ui.home.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
@@ -17,10 +13,9 @@ import com.example.instaclone.ui.MainActivity
 import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.home.adapters.PostsAdapter
 import com.example.instaclone.ui.home.models.Post
-import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListener {
@@ -34,28 +29,24 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         super.onViewCreated(view, savedInstanceState)
         _bindng = FragmentHomeBinding.bind(view)
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener {
-            if (it.isSuccessful)
-                Timber.d(it.result)
-        }
-
         (activity as MainActivity).setToolbarTitle("SocialBook")
 
-        viewModel.getAllPosts()
         val postsAdapter = PostsAdapter(this)
         binding.rvPosts.apply {
             adapter = postsAdapter
             layoutManager = LinearLayoutManager(activity)
-            postponeEnterTransition()
-            viewTreeObserver.addOnDrawListener {
-                startPostponedEnterTransition()
-                true
+//            postponeEnterTransition()
+//            viewTreeObserver.addOnDrawListener {
+//                startPostponedEnterTransition()
+//            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.getPostsFlow().collectLatest {
+                postsAdapter.submitData(viewLifecycleOwner.lifecycle,it)
             }
         }
 
-        viewModel.posts.observe(viewLifecycleOwner,{
-            postsAdapter.posts = it
-        })
     }
 
     override fun onLike(postId: String) {
@@ -74,5 +65,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(
             post.user.username,post.user.userImage,post._id,post.description,post.user._id
         ))
+    }
+
+    override fun onUserClick(uid: String) {
+        findNavController().navigate(R.id.profileFragment,Bundle().apply {
+            putString("userId",uid)
+        })
     }
 }

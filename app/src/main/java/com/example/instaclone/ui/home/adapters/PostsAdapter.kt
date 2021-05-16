@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -19,23 +20,20 @@ import com.example.instaclone.ui.home.models.Post
 
 class PostsAdapter(
     val listener: OnClickListener
-) : RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
+) : PagingDataAdapter<Post,PostsAdapter.PostsViewHolder>(POST_COMPARATOR) {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Post>() {
-        override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-            return oldItem._id == newItem._id
-        }
+    companion object{
+        val POST_COMPARATOR = object : DiffUtil.ItemCallback<Post>() {
+            override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+                return oldItem._id == newItem._id
+            }
 
-        override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-            return oldItem == newItem
+            override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 
-    private val differ = AsyncListDiffer<Post>(this, diffCallback)
-
-    var posts: List<Post>
-        get() = differ.currentList
-        set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
         return PostsViewHolder(
@@ -48,19 +46,16 @@ class PostsAdapter(
     }
 
     override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
-        val post = posts[position]
-        val isLastPost = posts.size - 1 == position
-        holder.bind(post, isLastPost)
-    }
-
-    override fun getItemCount(): Int {
-        return posts.size;
+        val post = getItem(position)
+        if (post != null) {
+            holder.bind(post)
+        }
     }
 
     inner class PostsViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(post: Post, isLastPost: Boolean) {
+        fun bind(post: Post) {
             binding.apply {
                 Glide.with(binding.root.context).load(post.user.userImage).into(ivUserImage)
                 tvUserName.text = post.user.username
@@ -87,12 +82,11 @@ class PostsAdapter(
                             GestureDetector.SimpleOnGestureListener() {
                             @SuppressLint("ClickableViewAccessibility")
                             override fun onDoubleTap(e: MotionEvent?): Boolean {
-                                Log.d("MyActivity", "onDoubleTap: double tap")
                                 LikeAnimation.visibility = View.VISIBLE
                                 LikeAnimation.playAnimation()
                                 if (!post.isLiked) {
                                     listener.onLike(post._id)
-                                    tvLikeCount.text = (post.likes.size + 1).toLikeCount()
+                                    tvLikeCount.text = (post.likes.size + 1).toString()
                                     btnLike.setImageResource(R.drawable.liked)
                                     btnLike.imageTintList = null
                                 }
@@ -110,9 +104,9 @@ class PostsAdapter(
                 tvLikeCount.setOnClickListener { listener.viewLikes(post._id) }
                 tvCommentCount.text = post.comments.size.toString()
                 tvPostDescription.text = post.description
-                if (isLastPost) {
-                    binding.root.setPadding(0, 0, 0, 150)
-                }
+//                if (isLastPost) {
+//                    binding.root.setPadding(0, 0, 0, 150)
+//                }
                 if (post.isLiked) {
                     btnLike.setImageResource(R.drawable.liked)
                 } else {
@@ -122,6 +116,9 @@ class PostsAdapter(
                             R.color.black
                         )
                     )
+                }
+                tvUserName.setOnClickListener {
+                    listener.onUserClick(post.user._id)
                 }
                 root.setOnClickListener {
                     listener.onClick(post)
@@ -134,5 +131,6 @@ class PostsAdapter(
         fun onLike(postId: String)
         fun viewLikes(postId: String)
         fun onClick(post: Post)
+        fun onUserClick(uid: String)
     }
 }

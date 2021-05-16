@@ -45,8 +45,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivUserImage"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/wishlist_poster"
         app:layout_constraintEnd_toEndOf="parent"
@@ -183,10 +183,11 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFollow"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.75"
-            android:background="@drawable/gradient"
+            android:background="@drawable/gradient_main"
             android:text="Follow"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -215,6 +216,9 @@
         android:id="@+id/rvProfilePosts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
         android:layout_marginHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"

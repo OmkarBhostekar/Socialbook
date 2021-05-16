@@ -7,25 +7,30 @@ import androidx.datastore.preferences.createDataStore
 import com.example.instaclone.comman.Constants.BASE_URL
 import com.example.instaclone.ui.auth.AuthApi
 import com.example.instaclone.ui.home.HomeApi
+import com.example.instaclone.ui.profile.ProfileApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient().newBuilder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .connectTimeout(120L, TimeUnit.SECONDS)
+            .readTimeout(120L, TimeUnit.SECONDS)
+            .writeTimeout(120L, TimeUnit.SECONDS)
             .build()
 
     @Singleton
@@ -48,4 +53,8 @@ object AppModule {
     @Singleton
     @Provides
     fun providePostsApi(retrofit: Retrofit): HomeApi = retrofit.create(HomeApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideProfileApi(retrofit: Retrofit): ProfileApi = retrofit.create(ProfileApi::class.java)
 }

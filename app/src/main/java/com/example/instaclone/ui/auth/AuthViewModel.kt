@@ -25,14 +25,17 @@ import com.example.instaclone.comman.Constants.USER_NAME
 import com.example.instaclone.data.DataStore.saveBooleeanToDS
 import com.example.instaclone.data.DataStore.saveStringToDS
 import com.example.instaclone.ui.auth.models.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
+import javax.inject.Inject
 
-class AuthViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AuthViewModel @Inject constructor(
         @Assisted savedStateHandle: SavedStateHandle,
         private val dataStore: DataStore<Preferences>,
         private val repository: AuthRepository

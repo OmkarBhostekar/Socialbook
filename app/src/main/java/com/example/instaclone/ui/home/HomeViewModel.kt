@@ -1,6 +1,5 @@
 package com.example.instaclone.ui.home
 
-import android.util.Log
 import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -8,44 +7,46 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.instaclone.InstaCloneApplication
 import com.example.instaclone.comman.Constants.TOKEN
 import com.example.instaclone.comman.Constants.UID
-import com.example.instaclone.comman.Result
+import com.example.instaclone.comman.Resource
 import com.example.instaclone.data.DataStore.readStringFromDS
 import com.example.instaclone.ui.auth.models.User
 import com.example.instaclone.ui.home.models.Comment
 import com.example.instaclone.ui.home.models.Post
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.net.SocketTimeoutException
+import javax.inject.Inject
 
-class HomeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     val repository: HomeRepository,
     private val dataStore: DataStore<Preferences>
 ) : ViewModel(){
 
     val posts = MutableLiveData<List<Post>>()
     val comments = MutableLiveData<List<Comment>>()
-    val likedBy = MutableLiveData<Result<List<User>>>()
+    val likedBy = MutableLiveData<Resource<List<User>>>()
+    val postCreated = MutableLiveData<Resource<String>>()
 
-    fun getAllPosts() = viewModelScope.launch {
-        val response = repository.getAllPosts("Bearer ${readStringFromDS(TOKEN,dataStore)}")
-        if (response.isSuccessful)
-            posts.postValue(response.body()?.Result)
-    }
+
+    fun getPostsFlow() = repository.getPostsFlow().cachedIn(viewModelScope)
 
     fun createNewPost(image: String, desc: String) = viewModelScope.launch {
         val body = HashMap<String,Any>()
-        body["uid"] = readStringFromDS(UID,dataStore)?: ""
         body["image"] = image
         body["desc"] = desc
         val response = repository.createPost("Bearer ${readStringFromDS(TOKEN,dataStore)}",body)
         if (response.isSuccessful)
-            showToast("Post created successfully")
+            postCreated.postValue(Resource.Success("Post created Successfully"))
         else
-            showToast("An error occurred...")
+            postCreated.postValue(Resource.Error("An Error Occurred"))
     }
 
     fun likePost(postId: String) = viewModelScope.launch {
@@ -54,12 +55,12 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun getLikedBy(postId: String) = viewModelScope.launch {
-        likedBy.postValue(Result.Loading())
+        likedBy.postValue(Resource.Loading())
         val response = repository.getLikedBy(postId,"Bearer ${readStringFromDS(TOKEN,dataStore)}")
         if (response.isSuccessful)
-            likedBy.postValue(Result.Success(response.body()!!.Result!!))
+            likedBy.postValue(Resource.Success(response.body()!!.Result!!))
         else
-            likedBy.postValue(Result.Error(""))
+            likedBy.postValue(Resource.Error(""))
     }
 
     fun newComment(text: String,postId: String) = viewModelScope.launch {
@@ -71,22 +72,12 @@ class HomeViewModel @ViewModelInject constructor(
                 "Bearer ${readStringFromDS(TOKEN,dataStore)}",
                 body
             )
-            if (response.isSuccessful)
-                getComments(postId)
         }catch(e: Exception){
         }catch(e: SocketTimeoutException){
         }
     }
 
-    fun getComments(postId: String) = viewModelScope.launch {
-        try{
-            val response = repository.getAllCommentsOfPost(postId,"Bearer ${readStringFromDS(TOKEN,dataStore)}")
-            if (response.isSuccessful && response.body()!!.Result != null && response.body()!!.Result!!.isNotEmpty())
-                comments.postValue(response.body()!!.Result!!)
-        }catch(e: Exception){
-        }catch(e: SocketTimeoutException){
-        }
-    }
+    fun getCommentsFlow(postId: String) = repository.getCommentsFlow(postId).cachedIn(viewModelScope)
 
     private suspend fun showToast(msg: String) = withContext(Dispatchers.Main){
         Toast.makeText(InstaCloneApplication(), msg, Toast.LENGTH_SHORT).show()

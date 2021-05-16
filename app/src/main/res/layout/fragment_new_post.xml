@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/etComment"
+            android:id="@+id/etCaption"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="8dp"
@@ -65,7 +65,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnCreatePost"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:background="@drawable/gradient_main"

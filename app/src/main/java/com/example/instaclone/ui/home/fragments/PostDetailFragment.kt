@@ -10,6 +10,7 @@ import androidx.core.text.bold
 import androidx.core.text.color
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.instaclone.R
@@ -19,6 +20,9 @@ import com.example.instaclone.ui.MainActivity
 import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.home.adapters.CommentsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
@@ -33,15 +37,13 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPostDetailBinding.bind(view)
 
-        val transition = TransitionInflater.from(activity).inflateTransition(
-            android.R.transition.move
-        )
-        sharedElementEnterTransition = transition
-        sharedElementReturnTransition = transition
+//        val transition = TransitionInflater.from(activity).inflateTransition(
+//            android.R.transition.move
+//        )
+//        sharedElementEnterTransition = transition
+//        sharedElementReturnTransition = transition
 
         (activity as MainActivity).setToolbarTitle("Comments")
-
-        args.postId?.let { viewModel.getComments(it) }
 
         binding.apply {
             adapter = CommentsAdapter()
@@ -55,18 +57,26 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
             btnPost.setOnClickListener {
                 if (etComment.text.toString().isNotEmpty()){
                     viewModel.newComment(etComment.text.toString(),args.postId!!)
+                    etComment.setText("")
+                    adapter.refresh()
                 }
             }
         }
 
-        viewModel.comments.observe(viewLifecycleOwner,{
-            Toast.makeText(requireContext(), "new comments", Toast.LENGTH_SHORT).show()
-            adapter.comments = it
-        })
+        args.postId?.let { fetchComments(it) }
 
     }
 
-     override fun onDestroy() {
+    private fun fetchComments(postId: String) {
+        lifecycleScope.launch {
+            viewModel.getCommentsFlow(postId)
+                .collect {
+                    adapter.submitData(viewLifecycleOwner.lifecycle,it)
+                }
+        }
+    }
+
+    override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }

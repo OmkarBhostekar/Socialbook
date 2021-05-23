@@ -10,7 +10,9 @@ import com.example.instaclone.databinding.ItemFollowerBinding
 import com.example.instaclone.ui.auth.models.User
 
 class FollowersAdapter(
-    private val users: List<User>
+    private val users: List<User>,
+    private val uid: String,
+    private val listener: OnClickListener
 ) : RecyclerView.Adapter<FollowersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,10 +34,17 @@ class FollowersAdapter(
             binding.tvUserName.text = user.username
             binding.tvName.text = user.name
             Glide.with(binding.root.context).load(user.userImage).into(binding.ivUserImage)
-            if (user.isFollowed != null && user.isFollowed){
-                binding.btnFollow.visibility = View.GONE
-                binding.btnFollowed.visibility = View.VISIBLE
+            if (user._id == uid){
+                binding.btnView.visibility = View.GONE
+            }else{
+                binding.btnView.visibility = View.VISIBLE
+                binding.btnView.setOnClickListener {
+                    listener.onViewProfileClick(user._id)
+                }
             }
         }
+    }
+    interface OnClickListener{
+        fun onViewProfileClick(uid: String)
     }
 }

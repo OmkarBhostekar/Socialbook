@@ -1,5 +1,9 @@
 package com.example.instaclone.ui.auth.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class User(
         val _id: String,
         val name: String?,
@@ -7,9 +11,9 @@ data class User(
         val username: String?,
         val userImage: String?,
         val bio: String?,
-        val posts: List<String>?,
+        val posts: Int?,
         val followers: List<String>?,
         val following: List<String>?,
         val createdAt: String?,
-        val isFollowed: Boolean?
-)
+        val followed: Boolean?,
+) : Parcelable

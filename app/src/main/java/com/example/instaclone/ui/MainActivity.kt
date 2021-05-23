@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             setOf(
                 R.id.homeFragment,
                 R.id.searchFragment,
-                R.id.userActivityFragment,
+                R.id.inboxFragment,
                 R.id.profileFragment
             )
         )
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 R.id.loginFragment,
                 R.id.registerFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
                 R.id.postDetailFragment -> showToolbarAndBottomNav(toolbar = true,bottomNav = false)
+                R.id.searchedProfileFragment,
                 R.id.profileFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = true)
                 else -> showToolbarAndBottomNav(toolbar = true,bottomNav = true)
             }
@@ -134,6 +135,11 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults,this)
+    }
+
+    fun showToolbar(b: Boolean) {
+        binding.toolbar.root.isVisible = b
     }
 }

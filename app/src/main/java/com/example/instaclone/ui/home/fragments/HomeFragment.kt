@@ -3,6 +3,7 @@ package com.example.instaclone.ui.home.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.example.instaclone.ui.MainActivity
 import com.example.instaclone.ui.home.HomeViewModel
 import com.example.instaclone.ui.home.adapters.PostsAdapter
 import com.example.instaclone.ui.home.models.Post
+import com.example.instaclone.ui.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -24,6 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
     private val binding: FragmentHomeBinding
         get() =  _bindng!!
     private val viewModel: HomeViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,11 +38,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         binding.rvPosts.apply {
             adapter = postsAdapter
             layoutManager = LinearLayoutManager(activity)
-//            postponeEnterTransition()
-//            viewTreeObserver.addOnDrawListener {
-//                startPostponedEnterTransition()
-//            }
         }
+
+        profileViewModel.getMyProfile()
 
         lifecycleScope.launch {
             viewModel.getPostsFlow().collectLatest {
@@ -68,7 +69,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
     }
 
     override fun onUserClick(uid: String) {
-        findNavController().navigate(R.id.profileFragment,Bundle().apply {
+        findNavController().navigate(R.id.searchedProfileFragment,Bundle().apply {
             putString("userId",uid)
         })
     }

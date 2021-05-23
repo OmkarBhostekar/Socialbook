@@ -30,12 +30,12 @@ class ProfilePostsAdapter(
             post?.let {
                 binding.ivPostImage.setImage(post.image)
                 binding.root.setOnClickListener {
-                    listener.onClick(post._id)
+                    listener.onClick(post)
                 }
             }
         }
     }
     interface OnClickListener{
-        fun onClick(postId: String)
+        fun onClick(post: Post)
     }
 }

@@ -60,6 +60,9 @@ class AuthViewModel @Inject constructor(
                     saveBooleeanToDS(IS_LOGGED_IN,true,dataStore)
                     saveStringToDS(TOKEN, it,dataStore)
                 }
+                response.body()!!.Result!!._id?.let {
+                    saveStringToDS(UID, it,dataStore)
+                }
                 delay(1000L)
                 _loginUiState.value = LoginUiState.Success
             }else{

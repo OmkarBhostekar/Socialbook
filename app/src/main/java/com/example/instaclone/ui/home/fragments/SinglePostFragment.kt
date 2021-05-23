@@ -1,67 +1,42 @@
-package com.example.instaclone.ui.home.adapters
+package com.example.instaclone.ui.home.fragments
 
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Bundle
 import android.text.SpannableStringBuilder
-import android.util.Log
-import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.core.text.color
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.instaclone.R
-import com.example.instaclone.comman.toLikeCount
 import com.example.instaclone.comman.toTimeDiff
-import com.example.instaclone.databinding.ItemPostBinding
-import com.example.instaclone.ui.home.models.Post
+import com.example.instaclone.databinding.FragmentSinglePostBinding
+import com.example.instaclone.ui.home.HomeViewModel
 
-class PostsAdapter(
-    val listener: OnClickListener
-) : PagingDataAdapter<Post,PostsAdapter.PostsViewHolder>(POST_COMPARATOR) {
+class SinglePostFragment : Fragment(R.layout.fragment_single_post){
 
-    companion object{
-        val POST_COMPARATOR = object : DiffUtil.ItemCallback<Post>() {
-            override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem._id == newItem._id
-            }
+    private var _binding: FragmentSinglePostBinding? = null
+    private val binding: FragmentSinglePostBinding
+        get() = _binding!!
+    private val args: SinglePostFragmentArgs by navArgs()
+    private val homeViewModel: HomeViewModel by viewModels()
 
-            override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentSinglePostBinding.bind(view)
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
-        return PostsViewHolder(
-            ItemPostBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
-        val post = getItem(position)
-        if (post != null) {
-            holder.bind(post)
-        }
-    }
-
-    inner class PostsViewHolder(private val binding: ItemPostBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("ClickableViewAccessibility")
-        fun bind(post: Post) {
-            binding.apply {
+        args.post?.let { post ->
+            binding.post.apply {
                 Glide.with(binding.root.context).load(post.user.userImage).into(ivUserImage)
                 tvUserName.text = post.user.username
                 Glide.with(binding.root.context).load(post.image).into(ivPostImage)
@@ -90,7 +65,7 @@ class PostsAdapter(
                                 LikeAnimation.visibility = View.VISIBLE
                                 LikeAnimation.playAnimation()
                                 if (!post.isLiked) {
-                                    listener.onLike(post._id)
+                                    homeViewModel.likePost(post._id)
                                     tvLikeCount.text = (post.likes.size + 1).toString()
                                     btnLike.setImageResource(R.drawable.liked)
                                     btnLike.imageTintList = null
@@ -106,16 +81,18 @@ class PostsAdapter(
                     })
 
                 tvLikeCount.text = post.likes.size.toString()
-                tvLikeCount.setOnClickListener { listener.viewLikes(post._id) }
+                tvLikeCount.setOnClickListener {
+                    findNavController().navigate(R.id.fragmentBottomSheet,Bundle().apply {
+                        putString("type","like")
+                        putString("id",post._id)
+                    })
+                }
                 tvCommentCount.text = post.comments.size.toString()
                 tvPostDescription.text = SpannableStringBuilder()
                     .color(Color.BLACK){
                         bold { append(post.user.username) }
                     }
                     .append(" ${post.description}")
-//                if (isLastPost) {
-//                    binding.root.setPadding(0, 0, 0, 150)
-//                }
                 if (post.isLiked) {
                     btnLike.setImageResource(R.drawable.liked)
                 } else {
@@ -127,20 +104,23 @@ class PostsAdapter(
                     )
                 }
                 tvTimeStamp.text = post.createdAt.toTimeDiff()
-                tvUserName.setOnClickListener {
-                    listener.onUserClick(post.user._id)
-                }
                 root.setOnClickListener {
-                    listener.onClick(post)
+                    findNavController().navigate(
+                        SinglePostFragmentDirections.actionSinglePostFragmentToPostDetailFragment(
+                            post.user.username,
+                            post.user.userImage,
+                            post._id,
+                            post.description,
+                            post.user._id
+                        )
+                    )
                 }
             }
         }
     }
 
-    interface OnClickListener{
-        fun onLike(postId: String)
-        fun viewLikes(postId: String)
-        fun onClick(post: Post)
-        fun onUserClick(uid: String)
+     override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

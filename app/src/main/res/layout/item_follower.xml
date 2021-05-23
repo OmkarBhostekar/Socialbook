@@ -51,28 +51,14 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFollow"
+        android:id="@+id/btnView"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        app:strokeColor="@color/colorPrimary"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Follow"
+        android:text="View"
+        android:textSize="13sp"
         android:textAllCaps="false"
         android:textColor="@color/white"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFollowed"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:visibility="gone"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Followed"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

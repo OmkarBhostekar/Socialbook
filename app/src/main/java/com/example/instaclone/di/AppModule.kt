@@ -8,6 +8,7 @@ import com.example.instaclone.comman.Constants.BASE_URL
 import com.example.instaclone.ui.auth.AuthApi
 import com.example.instaclone.ui.home.HomeApi
 import com.example.instaclone.ui.profile.ProfileApi
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,4 +58,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideProfileApi(retrofit: Retrofit): ProfileApi = retrofit.create(ProfileApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideFirebaseRealtimeDatabase() : FirebaseDatabase = FirebaseDatabase.getInstance()
 }

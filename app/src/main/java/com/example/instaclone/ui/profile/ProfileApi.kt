@@ -51,4 +51,10 @@ interface ProfileApi {
         @Path("id") uid: String,
         @Header("Authorization") token: String,
     ) : Response<ApiResponse<List<User>>>
+
+    @GET("/profile/search")
+    suspend fun searchProfile(
+        @Header("Authorization") token: String,
+        @Query("q") query: String
+    ) : ApiResponse<PagingResponse<List<User>>>
 }

@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 R.id.loginFragment,
                 R.id.registerFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
                 R.id.postDetailFragment -> showToolbarAndBottomNav(toolbar = true,bottomNav = false)
+                R.id.searchFragment,
                 R.id.searchedProfileFragment,
                 R.id.profileFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = true)
                 else -> showToolbarAndBottomNav(toolbar = true,bottomNav = true)

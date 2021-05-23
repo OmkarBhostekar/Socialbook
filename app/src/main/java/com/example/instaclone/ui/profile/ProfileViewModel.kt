@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.instaclone.comman.Constants.BIO
 import com.example.instaclone.comman.Constants.FOLLOWERS_COUNT
 import com.example.instaclone.comman.Constants.FOLLOWING_COUNT
@@ -35,6 +36,13 @@ class ProfileViewModel @Inject constructor(
     val myProfile = MutableLiveData<Resource<User>>()
     var profileLoaded = false
     val followers = MutableLiveData<Resource<List<User>>>()
+    var token = ""
+
+    init {
+        viewModelScope.launch {
+            token = "Bearer ${readStringFromDS(TOKEN,dataStore)}"
+        }
+    }
 
     fun getMyProfile() = viewModelScope.launch {
         if (!profileLoaded){
@@ -144,5 +152,10 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun getProfilePostsFlow(uid: String) = repository.getProfilePosts(uid)
+
+    fun searchProfileFlow(q: String) = repository.searchProfile(
+        token = token,
+        q = q
+    ).cachedIn(viewModelScope)
 
 }

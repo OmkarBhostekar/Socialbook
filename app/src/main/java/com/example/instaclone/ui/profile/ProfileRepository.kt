@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.instaclone.ui.profile.paging.ProfilePostsPagingSource
+import com.example.instaclone.ui.profile.paging.SearchProfilePagingSource
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(
@@ -33,5 +34,19 @@ class ProfileRepository @Inject constructor(
     suspend fun getUserFollowers(uid: String, token: String) = api.getUserFollowers(uid, token)
 
     suspend fun getUserFollowing(uid: String, token: String) = api.getUserFollowing(uid, token)
+
+    fun searchProfile(token: String,q: String) =
+        Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                maxSize = 1000,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { SearchProfilePagingSource(
+                api,
+                token,
+                q
+            ) }
+        ).flow
 
 }

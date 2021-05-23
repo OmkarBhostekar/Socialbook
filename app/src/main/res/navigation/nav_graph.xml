@@ -28,7 +28,11 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.instaclone.ui.profile.fragments.SearchFragment"
-        />
+        >
+        <action
+            android:id="@+id/action_searchFragment_to_searchedProfileFragment"
+            app:destination="@id/searchedProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.instaclone.ui.profile.fragments.ProfileFragment"

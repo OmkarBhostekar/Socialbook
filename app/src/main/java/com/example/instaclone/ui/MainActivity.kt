@@ -50,15 +50,13 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
         navController.addOnDestinationChangedListener { _, d, _ ->
             when(d.id){
-                R.id.loginFragment,
-                R.id.newPostFragment,
-                R.id.editProfileFragment,
-                R.id.registerFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
-                R.id.postDetailFragment -> showToolbarAndBottomNav(toolbar = true,bottomNav = false)
                 R.id.searchFragment,
+                R.id.singlePostFragment,
                 R.id.searchedProfileFragment,
+                R.id.inboxFragment,
                 R.id.profileFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = true)
-                else -> showToolbarAndBottomNav(toolbar = true,bottomNav = true)
+                R.id.homeFragment -> showToolbarAndBottomNav(toolbar = true,bottomNav = true)
+                else -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
             }
         }
 

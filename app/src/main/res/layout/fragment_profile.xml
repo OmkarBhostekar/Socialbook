@@ -25,7 +25,7 @@
         android:ellipsize="end"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:text="be_like_om"
+        tools:text="be_like_om"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/btnMore"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Omkar Bhostekar"
+        tools:text="Omkar Bhostekar"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +77,7 @@
         android:gravity="center"
         android:maxLines="4"
         android:layout_marginTop="5dp"
-        android:text="Lorem 😂😂 ipsum 🕵️‍♂️dolor sit✍️ amet, consectetur adipiscing😇😇🤙 elit, sed do eiusmod🥰 tempor 😤😤🏳️‍🌈incididunt ut 👏labore 👏et👏 dolore 👏magna👏 aliqua. Ut enim ad minim 🐵✊🏿veniam,❤"
+        tools:text="Lorem 😂😂 ipsum 🕵️‍♂️dolor sit✍️ amet, consectetur adipiscing😇😇🤙 elit, sed do eiusmod🥰 tempor 😤😤🏳️‍🌈incididunt ut 👏labore 👏et👏 dolore 👏magna👏 aliqua. Ut enim ad minim 🐵✊🏿veniam,❤"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="46"
+                tools:text="46"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -133,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="2,836"
+                tools:text="2,836"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="433"
+                tools:text="433"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -211,14 +211,14 @@
             android:insetTop="0dp"
             android:insetBottom="0dp"
             app:cornerRadius="8dp"
-            app:strokeColor="@color/colorLightBlue"
+            app:strokeColor="@color/colorDarkBlue"
             app:strokeWidth="1dp"
             app:backgroundTint="@color/white"
             app:icon="@drawable/inbox"
             app:iconGravity="end"
             android:layout_marginBottom="2dp"
             app:iconSize="18dp"
-            app:iconTint="@color/colorLightBlue" />
+            app:iconTint="@color/colorDarkBlue" />
 
     </LinearLayout>
 
@@ -227,7 +227,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
         android:layout_marginHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

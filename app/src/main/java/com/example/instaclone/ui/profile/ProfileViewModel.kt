@@ -55,12 +55,24 @@ class ProfileViewModel @Inject constructor(
                 )
                 if (response.isSuccessful) {
                     myProfile.postValue(Resource.Success(response.body()!!.Result!!))
-//                    saveProfileData(response.body()!!.Result)
+                    saveProfileData(response.body()!!.Result)
                     profileLoaded = true
                 }
             }catch(e: Exception){
             }catch(e: SocketTimeoutException){
             }
+        }
+    }
+
+    private suspend fun saveProfileData(user: User?) {
+        user?.let {
+            saveStringToDS(NAME, user.name!!, dataStore)
+            saveStringToDS(USER_NAME, user.username!!, dataStore)
+            saveStringToDS(USER_IMAGE, user.userImage!!, dataStore)
+            saveStringToDS(BIO, user.bio!!, dataStore)
+            saveIntToDS(FOLLOWERS_COUNT, user.followers?.size ?: 0, dataStore)
+            saveIntToDS(FOLLOWING_COUNT, user.following?.size ?: 0, dataStore)
+            saveIntToDS(POSTS_COUNT, user.posts ?: 0, dataStore)
         }
     }
 

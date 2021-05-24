@@ -43,7 +43,7 @@ class CommentsAdapter() : PagingDataAdapter<Comment,CommentsAdapter.ViewHolder>(
                     Glide.with(root.context).load(comment.user.userImage).into(circleImageView)
                     tvComment.text = SpannableStringBuilder()
                         .color(Color.BLACK){
-                            bold { append("${comment.user.username}  ") }
+                            bold { append("${comment.user.username}   ") }
                         }
                         .append(comment.text)
                 }

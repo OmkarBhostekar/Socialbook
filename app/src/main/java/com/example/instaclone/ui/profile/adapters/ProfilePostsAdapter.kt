@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.instaclone.R
 import com.example.instaclone.databinding.ItemProfilePostBinding
 import com.example.instaclone.extension.setImage
@@ -28,7 +29,7 @@ class ProfilePostsAdapter(
         fun bind(position: Int){
             val post = getItem(position)
             post?.let {
-                binding.ivPostImage.setImage(post.image)
+                Glide.with(binding.root.context).load(post.image).into(binding.ivPostImage)
                 binding.root.setOnClickListener {
                     listener.onClick(post)
                 }

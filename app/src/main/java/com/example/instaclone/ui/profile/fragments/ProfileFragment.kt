@@ -21,6 +21,7 @@ import com.example.instaclone.comman.Constants.UID
 import com.example.instaclone.comman.Constants.USER_IMAGE
 import com.example.instaclone.comman.Constants.USER_NAME
 import com.example.instaclone.comman.Resource
+import com.example.instaclone.comman.SpannedGridLayoutManager
 import com.example.instaclone.data.DataStore.readIntFromDS
 import com.example.instaclone.data.DataStore.readStringFromDS
 import com.example.instaclone.databinding.FragmentProfileBinding
@@ -51,6 +52,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile),ProfilePostsAdapter.
         adapter = ProfilePostsAdapter(this)
 
         binding.rvProfilePosts.adapter = adapter
+        val manager = SpannedGridLayoutManager(
+            { position -> // Conditions for 2x2 items
+                if (position % 13 == 0 || position % 13 == 7) {
+                    SpannedGridLayoutManager.SpanInfo(2, 2)
+                } else {
+                    SpannedGridLayoutManager.SpanInfo(1, 1)
+                }
+            },
+            3,  // number of columns
+            1f // how big is default item
+        )
+
+        binding.rvProfilePosts.layoutManager = manager
 
         binding.btnFollow.apply {
             text = "Edit Profile"

@@ -8,12 +8,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.text.bold
 import androidx.core.text.color
+import androidx.datastore.preferences.core.Preferences
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.instaclone.R
+import com.example.instaclone.comman.Constants
+import com.example.instaclone.data.DataStore
 import com.example.instaclone.databinding.FragmentPostDetailBinding
 import com.example.instaclone.extension.setImage
 import com.example.instaclone.ui.MainActivity
@@ -23,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
@@ -33,16 +37,13 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
     private val args: PostDetailFragmentArgs by navArgs()
     private val viewModel: HomeViewModel by viewModels()
     lateinit var adapter: CommentsAdapter
+
+    @Inject
+    lateinit var dataStore: androidx.datastore.core.DataStore<Preferences>
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPostDetailBinding.bind(view)
-
-//        val transition = TransitionInflater.from(activity).inflateTransition(
-//            android.R.transition.move
-//        )
-//        sharedElementEnterTransition = transition
-//        sharedElementReturnTransition = transition
-
         (activity as MainActivity).setToolbarTitle("Comments")
 
         binding.apply {
@@ -60,6 +61,11 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
                     etComment.setText("")
                     adapter.refresh()
                 }
+            }
+            lifecycleScope.launch {
+                Glide.with(requireContext())
+                    .load(DataStore.readStringFromDS(Constants.USER_IMAGE, dataStore))
+                    .into(binding.ivProfileImage)
             }
         }
 

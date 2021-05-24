@@ -110,7 +110,7 @@ class PostsAdapter(
                 tvCommentCount.text = post.comments.size.toString()
                 tvPostDescription.text = SpannableStringBuilder()
                     .color(Color.BLACK){
-                        bold { append(post.user.username) }
+                        bold { "${append(post.user.username)}  " }
                     }
                     .append(" ${post.description}")
 //                if (isLastPost) {

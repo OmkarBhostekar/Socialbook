@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.instaclone.R
 import com.example.instaclone.comman.Resource
+import com.example.instaclone.comman.SpannedGridLayoutManager
 import com.example.instaclone.databinding.FragmentProfileBinding
 import com.example.instaclone.extension.setImage
 import com.example.instaclone.ui.home.models.Post
@@ -42,6 +43,19 @@ class SearchedProfileFragment : Fragment(R.layout.fragment_profile), ProfilePost
         }
 
         binding.rvProfilePosts.adapter = adapter
+        val manager = SpannedGridLayoutManager(
+            { position -> // Conditions for 2x2 items
+                if (position % 13 == 0 || position % 13 == 7) {
+                    SpannedGridLayoutManager.SpanInfo(2, 2)
+                } else {
+                    SpannedGridLayoutManager.SpanInfo(1, 1)
+                }
+            },
+            3,  // number of columns
+            1f // how big is default item
+        )
+
+        binding.rvProfilePosts.layoutManager = manager
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()

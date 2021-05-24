@@ -7,14 +7,19 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.instaclone.R
 import com.example.instaclone.comman.Constants
+import com.example.instaclone.comman.Constants.USER_IMAGE
 import com.example.instaclone.comman.Resource
+import com.example.instaclone.data.DataStore.readStringFromDS
 import com.example.instaclone.databinding.FragmentNewPostBinding
 import com.example.instaclone.extension.setImage
 import com.example.instaclone.ui.home.HomeViewModel
@@ -22,9 +27,11 @@ import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewPostFragment : Fragment(R.layout.fragment_new_post){
@@ -35,6 +42,9 @@ class NewPostFragment : Fragment(R.layout.fragment_new_post){
     private val args: NewPostFragmentArgs by navArgs()
     private val viewModel: HomeViewModel by viewModels()
     private var image: String? = ""
+
+    @Inject
+    lateinit var dataStore: DataStore<Preferences>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +59,7 @@ class NewPostFragment : Fragment(R.layout.fragment_new_post){
 
         val storageRef = FirebaseStorage.getInstance().reference
 
-        binding.btnCreatePost.setOnClickListener {
+        binding.btnSave.setOnClickListener {
            image?.let {
                val imageRef = storageRef.child("post_images/${System.currentTimeMillis()}.jpg")
                val file = Uri.fromFile(File(image!!))
@@ -62,6 +72,11 @@ class NewPostFragment : Fragment(R.layout.fragment_new_post){
                        }
                    }
            }
+        }
+        lifecycleScope.launch {
+            Glide.with(requireContext())
+                .load(readStringFromDS(USER_IMAGE,dataStore))
+                .into(binding.ivProfileImage)
         }
         viewModel.postCreated.observe(viewLifecycleOwner,{
             if (it is Resource.Success){

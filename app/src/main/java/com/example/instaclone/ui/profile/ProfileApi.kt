@@ -38,7 +38,7 @@ interface ProfileApi {
     suspend fun updateProfile(
         @Header("Authorization") token: String,
         @Body body: HashMap<String, Any>
-    )
+    ) : Response<Any>
 
     @GET("/profile/{id}/followers/")
     suspend fun getUserFollowers(

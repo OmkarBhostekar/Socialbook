@@ -3,6 +3,7 @@ package com.example.instaclone.comman
 object Constants {
 
     const val PICK_IMAGE_REQUEST_CODE = 200
+    const val PICK_IMAGE_FOR_PROFILE_REQUEST_CODE = 201
     const val GALLERY_PERMISSION_REQUEST_CODE = 150
 
     // development url

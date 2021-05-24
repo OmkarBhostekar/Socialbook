@@ -58,6 +58,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile),ProfilePostsAdapter.
             background = ContextCompat.getDrawable(requireContext(),R.drawable.bg_followed)
             setOnClickListener {
                 // navigate to edit profile
+                findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
             }
         }
 

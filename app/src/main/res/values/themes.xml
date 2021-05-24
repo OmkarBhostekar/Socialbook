@@ -3,8 +3,8 @@
     <style name="Theme.Instagramclone" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorLightBlue</item>
-        <item name="colorPrimaryVariant">@color/colorAccent</item>
-        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorDarkBlue</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="fontFamily">@font/roboto</item>

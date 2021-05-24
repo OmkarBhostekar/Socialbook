@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_profileFragment_to_singlePostFragment"
             app:destination="@id/singlePostFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -162,4 +165,7 @@
             android:id="@+id/action_singlePostFragment_to_postDetailFragment"
             app:destination="@id/postDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.instaclone.ui.profile.fragments.EditProfileFragment" />
 </navigation>

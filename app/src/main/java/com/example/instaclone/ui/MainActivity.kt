@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.instaclone.R
 import com.example.instaclone.comman.Constants
 import com.example.instaclone.comman.Constants.GALLERY_PERMISSION_REQUEST_CODE
+import com.example.instaclone.comman.Constants.PICK_IMAGE_FOR_PROFILE_REQUEST_CODE
 import com.example.instaclone.comman.Constants.PICK_IMAGE_REQUEST_CODE
 import com.example.instaclone.databinding.ActivityMainBinding
 import com.theartofdev.edmodo.cropper.CropImage
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         navController.addOnDestinationChangedListener { _, d, _ ->
             when(d.id){
                 R.id.loginFragment,
+                R.id.newPostFragment,
+                R.id.editProfileFragment,
                 R.id.registerFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)
                 R.id.postDetailFragment -> showToolbarAndBottomNav(toolbar = true,bottomNav = false)
                 R.id.searchFragment,
@@ -60,7 +63,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         }
 
         binding.fabAdd.setOnClickListener {
-            selectImageFromGallery()
+            navController.navigate(R.id.newPostFragment)
         }
 
         binding.bottomNav.setupWithNavController(navController)
@@ -77,50 +80,9 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         binding.toolbar.tvTitle.text = title
     }
 
-    @AfterPermissionGranted(GALLERY_PERMISSION_REQUEST_CODE)
-    private fun selectImageFromGallery() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
-            val intent = Intent().setType("image/*")
-            intent.action = Intent.ACTION_GET_CONTENT
-            if (packageManager != null){
-                startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
-            }
-        }else{
-            EasyPermissions.requestPermissions(
-                this,
-                "Mirrorscore Needs to access your storage so you can select images",
-                GALLERY_PERMISSION_REQUEST_CODE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK){
-            when(requestCode){
-                PICK_IMAGE_REQUEST_CODE -> {
-                    data?.data?.let {
-                        CropImage.activity(it)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-                            .start(this)
-                    }
-                }
-                else -> {
-                    val image = CropImage.getActivityResult(data).uri.path
-                    image?.let {
-                        navController.navigate(R.id.newPostFragment,Bundle().apply {
-                            putString("imagePath",it)
-                        })
-                    }
-                }
-            }
-        }
-    }
 
     override fun onNavigateUp(): Boolean {
-        return navController.navigateUp()
+        return navController.navigateUp() || super.onNavigateUp()
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {

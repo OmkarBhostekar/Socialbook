@@ -8,7 +8,9 @@ import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.core.text.color
@@ -125,6 +127,21 @@ class PostsAdapter(
                             R.color.black
                         )
                     )
+                }
+                btnOptions.setOnClickListener {
+                    val popup = PopupMenu(root.context,this.btnOptions)
+                    popup.inflate(R.menu.menu_post_options)
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        popup.gravity = Gravity.END
+                    }
+                    popup.setOnMenuItemClickListener {
+                        if (it.itemId == R.id.miReport){
+                            Toast.makeText(root.context, "Post Reported", Toast.LENGTH_SHORT).show()
+                            true
+                        }
+                        false
+                    }
+                    popup.show()
                 }
                 tvTimeStamp.text = post.createdAt.toTimeDiff()
                 tvUserName.setOnClickListener {

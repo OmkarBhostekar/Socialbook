@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             setOf(
                 R.id.homeFragment,
                 R.id.searchFragment,
-                R.id.inboxFragment,
+                R.id.pollsFragment,
                 R.id.profileFragment
             )
         )
@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 R.id.singlePostFragment,
                 R.id.searchedProfileFragment,
                 R.id.inboxFragment,
+                R.id.pollsFragment,
                 R.id.profileFragment -> showToolbarAndBottomNav(toolbar = false,bottomNav = true)
                 R.id.homeFragment -> showToolbarAndBottomNav(toolbar = true,bottomNav = true)
                 else -> showToolbarAndBottomNav(toolbar = false,bottomNav = false)

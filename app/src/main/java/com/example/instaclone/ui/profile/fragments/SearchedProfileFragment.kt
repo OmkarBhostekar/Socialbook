@@ -91,9 +91,11 @@ class SearchedProfileFragment : Fragment(R.layout.fragment_profile), ProfilePost
                         }
                         btnFollow.setOnClickListener {
                             if (followed){
+                                tvFollowerCount.text = (tvFollowerCount.text.toString().toInt() - 1).toString()
                                 viewModel.unfollowUser(user._id)
                                 setFollowButton(followed = false)
                             }else{
+                                tvFollowerCount.text = (tvFollowerCount.text.toString().toInt() + 1).toString()
                                 viewModel.followUser(user._id)
                                 setFollowButton(followed = true)
                             }

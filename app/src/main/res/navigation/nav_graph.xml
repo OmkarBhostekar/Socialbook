@@ -168,4 +168,7 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.instaclone.ui.profile.fragments.EditProfileFragment" />
+    <fragment
+        android:id="@+id/pollsFragment"
+        android:name="com.example.instaclone.ui.polls.fragments.PollsFragment" />
 </navigation>

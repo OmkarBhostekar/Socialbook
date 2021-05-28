@@ -7,7 +7,7 @@ object Constants {
     const val GALLERY_PERMISSION_REQUEST_CODE = 150
 
     // development url
-    const val BASE_URL = "http://192.168.2.205:8000"
+    const val BASE_URL = "http://192.168.2.204:8000"
     // heroku prod url
 //    const val BASE_URL = "https://instagram-clone-om.herokuapp.com"
     const val TOKEN = "token"

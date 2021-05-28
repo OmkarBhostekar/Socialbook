@@ -7,6 +7,7 @@ import androidx.datastore.preferences.createDataStore
 import com.example.instaclone.comman.Constants.BASE_URL
 import com.example.instaclone.ui.auth.AuthApi
 import com.example.instaclone.ui.home.HomeApi
+import com.example.instaclone.ui.polls.PollApi
 import com.example.instaclone.ui.profile.ProfileApi
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
@@ -58,6 +59,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideProfileApi(retrofit: Retrofit): ProfileApi = retrofit.create(ProfileApi::class.java)
+
+    @Singleton
+    @Provides
+    fun providePollApi(retrofit: Retrofit): PollApi = retrofit.create(PollApi::class.java)
 
     @Singleton
     @Provides

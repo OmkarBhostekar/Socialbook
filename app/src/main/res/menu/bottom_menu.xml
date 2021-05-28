@@ -18,8 +18,8 @@
         android:enabled="false"
         android:icon="@null"/>
 
-    <item android:id="@+id/inboxFragment"
-        android:title="Chats"
+    <item android:id="@+id/pollsFragment"
+        android:title="Polls"
         app:showAsAction="always"
         android:icon="@drawable/ic_chat"/>
 

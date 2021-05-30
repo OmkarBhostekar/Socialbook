@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PollsFragment : Fragment(R.layout.fragment_polls){
+class PollsFragment : Fragment(R.layout.fragment_polls),PollAdapter.OnClickListener{
 
     private var _binding: FragmentPollsBinding? = null
     private val binding: FragmentPollsBinding
@@ -26,7 +26,7 @@ class PollsFragment : Fragment(R.layout.fragment_polls){
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPollsBinding.bind(view)
 
-        adapter = PollAdapter()
+        adapter = PollAdapter(this)
         binding.rvPolls.adapter = adapter
 
         lifecycleScope.launch {
@@ -35,10 +35,17 @@ class PollsFragment : Fragment(R.layout.fragment_polls){
             }
         }
 
+        viewModel.voteAdded.observe(viewLifecycleOwner,{
+            adapter.refresh()
+        })
 
     }
 
-     override fun onDestroy() {
+    override fun onOptionClick(pollId: String, optionId: String) {
+        viewModel.addOrUpdateVote(pollId, optionId)
+    }
+
+    override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }

@@ -3,7 +3,7 @@
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@android:color/transparent"/>
-            <size android:height="30dp"/>
+            <size android:height="24dp"/>
             <corners android:radius="6dp"/>
             <stroke android:color="#84E2FB"
                 android:width="1dp"/>
@@ -26,7 +26,7 @@
                 <item>
                     <shape android:shape="rectangle">
                         <solid android:color="#84E2FB"/>
-                        <size android:height="30dp"/>
+                        <size android:height="24dp"/>
                         <corners android:radius="4dp"/>
                         <stroke android:color="#84E2FB"
                             android:width="1dp"/>

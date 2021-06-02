@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:max="100"
         tools:progress="66"
-        android:progressDrawable="@drawable/progress_track"
+        android:progressDrawable="@drawable/progress_track_none"
         android:thumb="@android:color/transparent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,23 +23,22 @@
         android:layout_marginEnd="5dp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textSize="10sp"
+        android:textSize="11sp"
         android:layout_marginStart="30dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/seekBar"
-        app:layout_constraintEnd_toStartOf="@+id/tvPercentage"
+        app:layout_constraintEnd_toStartOf="@+id/btnRemove"
         app:layout_constraintStart_toStartOf="@+id/seekBar"
         app:layout_constraintTop_toTopOf="@+id/seekBar" />
-    <TextView
-        android:id="@+id/tvPercentage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        android:textSize="11sp"
+    <ImageView
+        android:id="@+id/btnRemove"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:padding="3dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_baseline_close_24"
         app:layout_constraintBottom_toBottomOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/seekBar"
-        tools:text="25%" />
+        app:tint="@color/black" />
 </androidx.constraintlayout.widget.ConstraintLayout>

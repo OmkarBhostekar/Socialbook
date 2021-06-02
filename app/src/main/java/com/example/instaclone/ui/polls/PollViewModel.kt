@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.instaclone.comman.Constants
+import com.example.instaclone.comman.Resource
+import com.example.instaclone.ui.polls.models.NewOption
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
 import javax.inject.Inject
@@ -19,8 +22,37 @@ class PollViewModel @Inject constructor(
 ) : ViewModel() {
 
     val voteAdded = MutableLiveData<String>()
+    val pollCreated = MutableLiveData<Resource<String>>()
 
     fun getPolls() = repository.gePolls(dataStore).cachedIn(viewModelScope)
+
+    fun createPoll(q: String, options: List<NewOption>) = viewModelScope.launch(Dispatchers.IO) {
+        try{
+            val body = HashMap<String,Any>()
+            body["user"] = com.example.instaclone.data.DataStore.readStringFromDS(
+                Constants.UID,
+                dataStore
+            ) ?: ""
+            body["text"] = q
+            body["options"] = options
+            pollCreated.postValue(Resource.Loading())
+            val response = repository.createPoll("Bearer ${
+                com.example.instaclone.data.DataStore.readStringFromDS(
+                    Constants.TOKEN,
+                    dataStore
+                )
+            }",
+            body)
+            if (response.isSuccessful)
+                pollCreated.postValue(Resource.Success("Poll Created Successfully"))
+            else
+                pollCreated.postValue(Resource.Error("An Error Occurred"))
+        }catch(e: Exception){
+            pollCreated.postValue(Resource.Error("An Error Occurred"))
+        }catch(e: SocketTimeoutException){
+            pollCreated.postValue(Resource.Error("An Error Occurred"))
+        }
+    }
 
     fun addOrUpdateVote(pollId: String,optionId: String) = viewModelScope.launch {
         try{

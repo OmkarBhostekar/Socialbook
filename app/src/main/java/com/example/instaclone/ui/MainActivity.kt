@@ -1,10 +1,9 @@
 package com.example.instaclone.ui
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -13,15 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.instaclone.R
-import com.example.instaclone.comman.Constants
-import com.example.instaclone.comman.Constants.GALLERY_PERMISSION_REQUEST_CODE
-import com.example.instaclone.comman.Constants.PICK_IMAGE_FOR_PROFILE_REQUEST_CODE
-import com.example.instaclone.comman.Constants.PICK_IMAGE_REQUEST_CODE
 import com.example.instaclone.databinding.ActivityMainBinding
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
-import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
 @AndroidEntryPoint
@@ -29,6 +21,15 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim) }
+    private val rotateClose: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim) }
+    private val toBottomRight: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.to_bottom_right_anim) }
+    private val fromBottomRight: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.from_bottom_right_anim) }
+    private val toBottomLeft: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.to_bottom_left_anim) }
+    private val fromBottomLeft: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.from_bottom_left_anim) }
+
+    private var clicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +62,52 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             }
         }
 
-        binding.fabAdd.setOnClickListener {
+        binding.floatingActionButton.setOnClickListener {
+            setVisibility(clicked)
+            setAnimation(clicked)
+            clicked = !clicked
             navController.navigate(R.id.newPostFragment)
         }
 
+        binding.floatingActionButton3.setOnClickListener {
+            setVisibility(clicked)
+            setAnimation(clicked)
+            clicked = !clicked
+            navController.navigate(R.id.newPollFragment)
+        }
+
+        binding.fabAdd.setOnClickListener {
+            addButtonClicked()
+        }
         binding.bottomNav.setupWithNavController(navController)
+    }
+
+    private fun addButtonClicked() {
+        setVisibility(clicked)
+        setAnimation(clicked)
+        clicked = !clicked
+    }
+
+    private fun setVisibility(clicked: Boolean) {
+        if (!clicked){
+            binding.floatingActionButton.visibility = View.VISIBLE
+            binding.floatingActionButton3.visibility = View.VISIBLE
+        }else{
+            binding.floatingActionButton.visibility = View.INVISIBLE
+            binding.floatingActionButton3.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setAnimation(clicked: Boolean) {
+        if (!clicked){
+            binding.floatingActionButton.startAnimation(fromBottomRight)
+            binding.floatingActionButton3.startAnimation(fromBottomLeft)
+            binding.fabAdd.startAnimation(rotateOpen)
+        }else{
+            binding.floatingActionButton.startAnimation(toBottomRight)
+            binding.floatingActionButton3.startAnimation(toBottomLeft)
+            binding.fabAdd.startAnimation(rotateClose)
+        }
     }
 
     private fun showToolbarAndBottomNav(toolbar: Boolean, bottomNav: Boolean){

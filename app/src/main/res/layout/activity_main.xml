@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabCustomSize="45dp"
+        app:fabCustomSize="50dp"
         app:tint="@null"
         android:tint="@null"
         android:foreground="@drawable/fab_bg"
@@ -51,6 +51,38 @@
         <include android:id="@+id/toolbar"
             layout="@layout/toolbar"
             android:elevation="10dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            app:fabCustomSize="50dp"
+            app:backgroundTint="@color/white"
+            android:layout_marginEnd="10dp"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            android:src="@drawable/ic_baseline_camera_24"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toBottomOf="@+id/navHostFragment"
+            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:layout_marginStart="10dp"
+            app:fabCustomSize="50dp"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            android:src="@drawable/ic_baseline_poll_24"
+            app:backgroundTint="@color/white"
+            app:layout_constraintStart_toEndOf="@id/floatingActionButton"
+            app:layout_constraintBottom_toBottomOf="@+id/navHostFragment"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <fragment
             android:id="@+id/navHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"

@@ -21,7 +21,7 @@
     <item android:id="@+id/pollsFragment"
         android:title="Polls"
         app:showAsAction="always"
-        android:icon="@drawable/ic_chat"/>
+        android:icon="@drawable/ic_polls"/>
 
     <item android:id="@+id/profileFragment"
         android:title="Profile"

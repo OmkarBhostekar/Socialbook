@@ -171,4 +171,7 @@
     <fragment
         android:id="@+id/pollsFragment"
         android:name="com.example.instaclone.ui.polls.fragments.PollsFragment" />
+    <fragment
+        android:id="@+id/newPollFragment"
+        android:name="com.example.instaclone.ui.polls.fragments.NewPollFragment" />
 </navigation>

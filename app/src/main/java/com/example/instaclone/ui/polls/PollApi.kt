@@ -14,6 +14,12 @@ interface PollApi {
         @Query("page") page: Int
     ) : ApiResponse<PagingResponse<List<Poll>>>
 
+    @POST("/poll/")
+    suspend fun createPoll(
+        @Header("Authorization") token: String,
+        @Body body: HashMap<String, Any>
+    ) : Response<ApiResponse<Any>>
+
     @PATCH("/poll/{pollId}")
     suspend fun addOrUpdateVote(
         @Path("pollId") pollId: String,

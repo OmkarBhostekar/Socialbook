@@ -59,6 +59,10 @@ class NewPostFragment : Fragment(R.layout.fragment_new_post){
 
         val storageRef = FirebaseStorage.getInstance().reference
 
+        binding.btnClose.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnSave.setOnClickListener {
            image?.let {
                val imageRef = storageRef.child("post_images/${System.currentTimeMillis()}.jpg")

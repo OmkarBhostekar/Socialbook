@@ -21,5 +21,7 @@ class PollRepository @Inject constructor(
             pagingSourceFactory = { PollsPagingSource(api,dataStore = dataStore) }
         ).flow
 
+    suspend fun createPoll(token: String, body: HashMap<String, Any>) = api.createPoll(token, body)
+
     suspend fun addOrUpdateVote(pollId: String, token: String, body: HashMap<String,Any>) = api.addOrUpdateVote(pollId, token, body)
 }

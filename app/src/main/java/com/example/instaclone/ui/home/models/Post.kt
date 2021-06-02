@@ -2,7 +2,7 @@ package com.example.instaclone.ui.home.models
 
 import android.os.Parcelable
 import com.example.instaclone.ui.auth.models.User
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Post(

@@ -103,7 +103,7 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post){
                         )
                     )
                 }
-                tvTimeStamp.text = post.createdAt.toTimeDiff()
+                tvTimeStamp.text = post.createdAt.toTimeDiff(root.context)
                 root.setOnClickListener {
                     findNavController().navigate(
                         SinglePostFragmentDirections.actionSinglePostFragmentToPostDetailFragment(

@@ -11,19 +11,35 @@
             app:destination="@id/loginFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
         <action
             android:id="@+id/action_homeFragment_to_fragmentBottomSheet"
             app:destination="@id/fragmentBottomSheet" />
         <action
             android:id="@+id/action_homeFragment_to_postDetailFragment"
-            app:destination="@id/postDetailFragment" />
+            app:destination="@id/postDetailFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_newPostFragment"
-            app:destination="@id/newPostFragment" />
+            app:destination="@id/newPostFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_searchedProfileFragment"
-            app:destination="@id/searchedProfileFragment" />
+            app:destination="@id/searchedProfileFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -31,7 +47,11 @@
         >
         <action
             android:id="@+id/action_searchFragment_to_searchedProfileFragment"
-            app:destination="@id/searchedProfileFragment" />
+            app:destination="@id/searchedProfileFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -45,7 +65,16 @@
             app:destination="@id/singlePostFragment" />
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -53,13 +82,21 @@
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -70,7 +107,11 @@
             app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_registerFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <dialog
         android:id="@+id/fragmentBottomSheet"
@@ -127,7 +168,11 @@
         android:name="com.example.instaclone.ui.home.fragments.NewPostFragment">
         <action
             android:id="@+id/action_newPostFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
         <argument
             android:name="imagePath"
             app:argType="string"
@@ -148,7 +193,11 @@
             app:destination="@id/fragmentBottomSheet" />
         <action
             android:id="@+id/action_searchedProfileFragment_to_singlePostFragment"
-            app:destination="@id/singlePostFragment" />
+            app:destination="@id/singlePostFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/inboxFragment"
@@ -163,7 +212,11 @@
             android:defaultValue="@null" />
         <action
             android:id="@+id/action_singlePostFragment_to_postDetailFragment"
-            app:destination="@id/postDetailFragment" />
+            app:destination="@id/postDetailFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"

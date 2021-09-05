@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.instaclone.R
 import com.example.instaclone.databinding.ActivityMainBinding
+import com.example.instaclone.ui.home.fragments.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -75,7 +76,9 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             clicked = !clicked
             navController.navigate(R.id.newPollFragment)
         }
-
+        binding.toolbar.btnSearch.setOnClickListener {
+            navController.navigate(R.id.searchFragment)
+        }
         binding.fabAdd.setOnClickListener {
             addButtonClicked()
         }
@@ -102,19 +105,19 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         if (!clicked){
             binding.floatingActionButton.startAnimation(fromBottomRight)
             binding.floatingActionButton3.startAnimation(fromBottomLeft)
-            binding.fabAdd.startAnimation(rotateOpen)
+//            binding.fabAdd.startAnimation(rotateOpen)
         }else{
             binding.floatingActionButton.startAnimation(toBottomRight)
             binding.floatingActionButton3.startAnimation(toBottomLeft)
-            binding.fabAdd.startAnimation(rotateClose)
+//            binding.fabAdd.startAnimation(rotateClose)
         }
     }
 
-    private fun showToolbarAndBottomNav(toolbar: Boolean, bottomNav: Boolean){
+    fun showToolbarAndBottomNav(toolbar: Boolean, bottomNav: Boolean){
         binding.toolbar.root.isVisible = toolbar
         binding.bottomNav.isVisible = bottomNav
         binding.bottomAppbar.isVisible = bottomNav
-        binding.fabAdd.isVisible = bottomNav
+        binding.fabAdd.visibility = if (bottomNav) View.VISIBLE else View.GONE
     }
 
     fun setToolbarTitle(title:String) {

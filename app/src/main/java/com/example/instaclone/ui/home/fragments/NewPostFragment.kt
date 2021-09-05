@@ -22,6 +22,7 @@ import com.example.instaclone.comman.Resource
 import com.example.instaclone.data.DataStore.readStringFromDS
 import com.example.instaclone.databinding.FragmentNewPostBinding
 import com.example.instaclone.extension.setImage
+import com.example.instaclone.ui.MainActivity
 import com.example.instaclone.ui.home.HomeViewModel
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
@@ -56,6 +57,8 @@ class NewPostFragment : Fragment(R.layout.fragment_new_post){
         }else{
             Glide.with(requireContext()).load(image!!).into(binding.ivNewPostImage)
         }
+
+        (activity as MainActivity).showToolbarAndBottomNav(toolbar = false,bottomNav = false)
 
         val storageRef = FirebaseStorage.getInstance().reference
 

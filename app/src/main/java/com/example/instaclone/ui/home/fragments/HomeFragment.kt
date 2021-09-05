@@ -2,11 +2,13 @@ package com.example.instaclone.ui.home.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instaclone.R
 import com.example.instaclone.databinding.FragmentHomeBinding
@@ -38,6 +40,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), PostsAdapter.OnClickListe
         binding.rvPosts.apply {
             adapter = postsAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+
+        postsAdapter.addLoadStateListener { loadState ->
+            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
         }
 
         profileViewModel.getMyProfile()

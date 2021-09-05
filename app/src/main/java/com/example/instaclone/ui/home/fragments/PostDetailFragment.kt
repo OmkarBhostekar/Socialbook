@@ -46,10 +46,16 @@ class PostDetailFragment : Fragment(R.layout.fragment_post_detail){
         _binding = FragmentPostDetailBinding.bind(view)
         (activity as MainActivity).setToolbarTitle("Comments")
 
+        (activity as MainActivity).showToolbarAndBottomNav(toolbar = false,bottomNav = false)
+
         binding.apply {
             adapter = CommentsAdapter()
             rvComments.adapter = adapter
-            args.userImage?.let { ivPostUserProfile.setImage(it) }
+            args.userImage?.let {
+                Glide.with(requireContext())
+                .load(it)
+                .into(ivPostUserProfile)
+            }
             tvPostDescription.text = SpannableStringBuilder()
                 .color(Color.BLACK){
                     bold { append("${args.username}  ") }

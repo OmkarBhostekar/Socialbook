@@ -2,9 +2,11 @@ package com.example.instaclone.ui.polls.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.example.instaclone.R
 import com.example.instaclone.databinding.FragmentPollsBinding
 import com.example.instaclone.ui.polls.PollViewModel
@@ -34,6 +36,10 @@ class PollsFragment : Fragment(R.layout.fragment_polls),PollAdapter.OnClickListe
                 adapter.submitData(viewLifecycleOwner.lifecycle,it)
             }
         }
+
+//        adapter.addLoadStateListener { loadState ->
+//            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+//        }
 
         viewModel.voteAdded.observe(viewLifecycleOwner,{
             adapter.refresh()

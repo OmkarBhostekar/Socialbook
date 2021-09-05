@@ -115,9 +115,6 @@ class PostsAdapter(
                         bold { "${append(post.user.username)}  " }
                     }
                     .append(" ${post.description}")
-//                if (isLastPost) {
-//                    binding.root.setPadding(0, 0, 0, 150)
-//                }
                 if (post.isLiked) {
                     btnLike.setImageResource(R.drawable.liked)
                 } else {
@@ -143,7 +140,7 @@ class PostsAdapter(
                     }
                     popup.show()
                 }
-                tvTimeStamp.text = post.createdAt.toTimeDiff()
+                tvTimeStamp.text = post.createdAt.toTimeDiff(root.context)
                 tvUserName.setOnClickListener {
                     listener.onUserClick(post.user._id)
                 }

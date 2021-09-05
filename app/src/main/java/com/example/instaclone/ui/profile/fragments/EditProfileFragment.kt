@@ -14,6 +14,7 @@ import com.example.instaclone.R
 import com.example.instaclone.comman.Constants
 import com.example.instaclone.comman.Resource
 import com.example.instaclone.databinding.FragmentEditProfileBinding
+import com.example.instaclone.ui.MainActivity
 import com.example.instaclone.ui.profile.ProfileViewModel
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
@@ -34,6 +35,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentEditProfileBinding.bind(view)
+
+        (activity as MainActivity).showToolbarAndBottomNav(toolbar = false,bottomNav = false)
 
         viewModel.myProfile.observe(viewLifecycleOwner,{
             if (it is Resource.Success){

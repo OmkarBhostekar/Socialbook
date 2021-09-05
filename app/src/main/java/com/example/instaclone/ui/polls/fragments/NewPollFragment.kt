@@ -14,6 +14,7 @@ import com.example.instaclone.comman.Constants
 import com.example.instaclone.comman.Resource
 import com.example.instaclone.data.DataStore
 import com.example.instaclone.databinding.FragmentNewPollBinding
+import com.example.instaclone.ui.MainActivity
 import com.example.instaclone.ui.polls.PollViewModel
 import com.example.instaclone.ui.polls.adapters.AddOptionAdapter
 import com.example.instaclone.ui.polls.models.NewOption
@@ -27,7 +28,7 @@ class NewPollFragment : Fragment(R.layout.fragment_new_poll),AddOptionAdapter.On
     private var _binding: FragmentNewPollBinding? = null
     private val binding: FragmentNewPollBinding
         get() = _binding!!
-    lateinit var addOptionAdapter: AddOptionAdapter
+    private lateinit var addOptionAdapter: AddOptionAdapter
     private val options = mutableListOf<NewOption>()
     private val viewModel: PollViewModel by viewModels()
 
@@ -39,6 +40,8 @@ class NewPollFragment : Fragment(R.layout.fragment_new_poll),AddOptionAdapter.On
         _binding = FragmentNewPollBinding.bind(view)
 
         addOptionAdapter = AddOptionAdapter(this)
+
+        (activity as MainActivity).showToolbarAndBottomNav(toolbar = false,bottomNav = false)
 
         binding.apply {
             rvOptions.adapter = addOptionAdapter

@@ -1,7 +1,10 @@
 package com.example.instaclone.ui.profile.fragments
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -74,6 +77,21 @@ class ProfileFragment : Fragment(R.layout.fragment_profile),ProfilePostsAdapter.
                 // navigate to edit profile
                 findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
             }
+        }
+
+        binding.btnMore.setOnClickListener {
+            val popup = PopupMenu(requireContext(),binding.btnMore)
+            popup.inflate(R.menu.menu_profile_options)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                popup.gravity = Gravity.END
+            }
+            popup.setOnMenuItemClickListener {
+                if (it.itemId == R.id.miLogout){
+                    true
+                }
+                false
+            }
+            popup.show()
         }
 
         viewModel.myProfile.observe(viewLifecycleOwner,{
